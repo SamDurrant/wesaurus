@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Nav.css'
+import routes from '../../utilities/routes'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 
@@ -37,9 +38,18 @@ function Nav() {
         />
       </div>
       <nav className={menuClasses.list}>
-        <Link to="/dictionary">dictionary</Link>
-        <Link to="/login">login</Link>
-        <Link to="/register">register</Link>
+        <Link to={routes.login} onClick={toggleMenu}>
+          login
+        </Link>
+        <Link to={routes.register} onClick={toggleMenu}>
+          register
+        </Link>
+        <Link to={routes.dictionary} onClick={toggleMenu}>
+          dictionary
+        </Link>
+        <Link to={routes.settings} onClick={toggleMenu}>
+          settings
+        </Link>
       </nav>
     </div>
   )
