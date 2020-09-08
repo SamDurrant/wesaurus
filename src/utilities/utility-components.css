@@ -1,0 +1,61 @@
+/* LABEL AND INPUT */
+.Label {
+  display: block;
+  margin-left: 1rem;
+  letter-spacing: 1px;
+  color: #333;
+  font-size: 0.7rem;
+}
+
+.Input {
+  width: 10rem;
+  border: 0.5px solid #99bdb8;
+  border-radius: 1.2rem;
+  background-color: var(--color-light);
+  color: #333;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  padding: 0.5rem 1rem;
+  margin: 0.3rem auto 1rem;
+  font-weight: 500;
+}
+
+.Input::placeholder {
+  color: #555;
+  letter-spacing: 1px;
+}
+
+.Input:focus {
+  outline-color: #99bdb8;
+}
+
+/* BUTTON */
+.Button {
+  display: block;
+  border: 0.5px solid transparent;
+  border-radius: 1.2rem;
+  background: none;
+  color: #555;
+  padding: 0.5rem 1rem;
+  margin: 1rem auto;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.Button:hover {
+  border: 0.5px solid #99bdb8;
+  box-shadow: -1px 3px 10px 1px rgba(0, 0, 0, 0.14);
+}
+
+/* SECTION */
+.Section {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+}

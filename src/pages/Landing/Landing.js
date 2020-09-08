@@ -1,8 +1,9 @@
 import React from 'react'
 import './Landing.css'
+import { Section } from '../../utilities/utility-components'
 
 function Landing() {
-  return <div className="landing-container">landing</div>
+  return <Section>landing</Section>
 }
 
 export default Landing

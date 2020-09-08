@@ -1,8 +1,9 @@
 import React from 'react'
 import './Dictionary.css'
+import { Section } from '../../utilities/utility-components'
 
 function Dictionary() {
-  return <div className="dictionary-container">dictionary</div>
+  return <Section>dictionary</Section>
 }
 
 export default Dictionary
