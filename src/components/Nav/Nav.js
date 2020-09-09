@@ -47,12 +47,6 @@ function Nav() {
           className="menu-icon"
           onClick={toggleMenu}
         />
-        <Link
-          to={routes.explore}
-          className={`word-link ${menuOpen && 'hidden'}`}
-        >
-          explore
-        </Link>
       </div>
 
       <nav className={menuClasses.list}>
@@ -61,6 +55,9 @@ function Nav() {
         </Link>
         <Link to={routes.register} onClick={toggleMenu}>
           register
+        </Link>
+        <Link to={routes.explore} onClick={toggleMenu}>
+          explore
         </Link>
         <Link to={routes.dictionary} onClick={toggleMenu}>
           dictionary

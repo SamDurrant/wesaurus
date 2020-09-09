@@ -50,6 +50,31 @@
   box-shadow: -1px 3px 10px 1px rgba(0, 0, 0, 0.14);
 }
 
+.Button-solid {
+  background: var(--color-dark);
+  color: var(--color-light);
+  transition: all 0.3s ease-in-out;
+}
+
+.Button-solid:hover {
+  border: 0.5px solid transparent;
+  background: #46749b;
+}
+
+.Button-small {
+  margin: 5px auto;
+  font-size: 0.8rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.Button-small:hover {
+  border: 0.5px solid transparent;
+  border-radius: 0;
+  border-bottom: 0.5px solid var(--color-dark);
+  box-shadow: none;
+  letter-spacing: 2px;
+}
+
 /* SECTION */
 .Section {
   min-height: 100vh;
@@ -58,4 +83,8 @@
   justify-content: center;
   align-items: center;
   padding: 15px 0;
+}
+
+.Section-column {
+  flex-direction: column;
 }

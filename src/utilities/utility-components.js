@@ -11,8 +11,15 @@ export function Input({ className, ...props }) {
   return <input className={classes} {...props} />
 }
 
-export function Button({ className, text, ...props }) {
-  const classes = ['Button', className].filter(Boolean).join(' ')
+export function Button({ className, text, small, solid, ...props }) {
+  const classes = [
+    'Button',
+    small && 'Button-small',
+    solid && 'Button-solid',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ')
   return (
     <button className={classes} {...props}>
       {text}
@@ -20,7 +27,9 @@ export function Button({ className, text, ...props }) {
   )
 }
 
-export function Section({ className, ...props }) {
-  const classes = ['Section', className].filter(Boolean).join(' ')
+export function Section({ className, column, stretch, ...props }) {
+  const classes = ['Section', column && 'Section-column', className]
+    .filter(Boolean)
+    .join(' ')
   return <section className={classes} {...props} />
 }

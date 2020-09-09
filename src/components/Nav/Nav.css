@@ -3,6 +3,7 @@
   bottom: 0;
   height: 80px;
   width: 100vw;
+  z-index: 500;
 }
 
 .wave-bar {
@@ -33,18 +34,6 @@
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.word-link {
-  display: block;
-  color: var(--color-dark);
-  font-size: 1.2rem;
-  letter-spacing: 1px;
-  cursor: pointer;
-}
-
-.word-link:hover {
-  color: var(--color-light);
-}
-
 .menu-list {
   position: absolute;
   width: 100vw;
@@ -70,4 +59,19 @@
 
 .menu-list a:hover {
   color: var(--color-light);
+}
+
+.slide-top {
+  -webkit-animation: slide-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.slide-top a {
+  -webkit-animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+  animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+}
+
+.slide-bottom {
+  -webkit-animation: slide-bottom 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-bottom 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
