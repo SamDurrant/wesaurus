@@ -7,6 +7,7 @@
 :root {
   --color-light: #f2f6f9;
   --color-dark: #264054;
+  --color-darkest: #13202a;
   --color-grey: #dcdcdc;
   --color-opal: #99bdb8;
   --color-gold: #f6bd60;
@@ -24,6 +25,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--color-light);
   color: var(--color-dark);
+}
+
+/* section stylings for reusability */
+.section {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.section-column {
+  flex-direction: column;
 }
 
 /* form card stylings for reusability */

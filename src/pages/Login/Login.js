@@ -1,23 +1,25 @@
 import React from 'react'
 import './Login.css'
-import {
-  Label,
-  Input,
-  Button,
-  Section,
-} from '../../utilities/utility-components'
+import BasicInput from '../../components/BasicInput/BasicInput'
+import BasicLabel from '../../components/BasicLabel/BasicLabel'
+import Button from '../../components/Button/Button'
 
 function Login() {
   return (
-    <Section>
+    <section className="section">
       <form className="form-card">
         <div>
-          <Label htmlFor="login-email">email</Label>
-          <Input id="login-email" placeholder="email" type="email" required />
+          <BasicLabel htmlFor="login-email">email</BasicLabel>
+          <BasicInput
+            id="login-email"
+            placeholder="email"
+            type="email"
+            required
+          />
         </div>
         <div>
-          <Label htmlFor="login-password">password</Label>
-          <Input
+          <BasicLabel htmlFor="login-password">password</BasicLabel>
+          <BasicInput
             id="login-password"
             placeholder="password"
             type="password"
@@ -26,7 +28,7 @@ function Login() {
         </div>
         <Button type="submit" text="login" />
       </form>
-    </Section>
+    </section>
   )
 }
 

@@ -1,0 +1,21 @@
+.BasicInput {
+  width: 10rem;
+  border: 0.5px solid #99bdb8;
+  border-radius: 1.2rem;
+  background-color: var(--color-light);
+  color: #333;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  padding: 0.5rem 1rem;
+  margin: 0.3rem auto 1rem;
+  font-weight: 500;
+}
+
+.BasicInput::placeholder {
+  color: #555;
+  letter-spacing: 1px;
+}
+
+.BasicInput:focus {
+  outline-color: #99bdb8;
+}

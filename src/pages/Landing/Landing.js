@@ -1,29 +1,51 @@
 import React from 'react'
 import './Landing.css'
-import LearningLeaf from '../../assets/learning_leaf.png'
-import { Section, Button } from '../../utilities/utility-components'
+import LearningLeaf from '../../assets/learning_leaf.svg'
+import Dashes from '../../assets/dashes.svg'
+import Solid from '../../assets/solid.svg'
+import Waves from '../../assets/waves.svg'
+import Button from '../../components/Button/Button'
 
 function Landing() {
   return (
-    <Section stretch column>
-      <div>
+    <section className="section section-column">
+      <header className="hero">
         <img
-          className="landing-banner"
+          className="hero-image"
           src={LearningLeaf}
           alt="woman seeing growth in learning"
         />
-        <div className="heading-box">
+        <div className="hero-text">
           <h1>Wesaurus</h1>
           <p>Help others find meaning.</p>
           <p>A dictionary app where you define the words.</p>
         </div>
-      </div>
+      </header>
 
-      <div className="cta-box">
+      <section className="cta">
         <Button solid text="sign up" />
         <Button small text="have an account?" />
-      </div>
-    </Section>
+      </section>
+
+      <section className="introduction">
+        <div className="introduction-text">
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta
+            dolorum quasi, ipsum dolore quisquam excepturi eaque dicta
+            blanditiis officia ab fugit libero minus magni beatae vel. Totam cum
+            soluta dicta quod quaerat exercitationem qui possimus delectus vel.
+            Earum rerum explicabo voluptatem dicta tempora!
+          </p>
+        </div>
+        <div className="introduction-abstract">
+          {/* <div> */}
+          <img src={Solid} alt="abstract solid grass clump" />
+          <img src={Dashes} alt="abstract dashes" />
+          <img src={Waves} alt="abstract waves" />
+          {/* </div> */}
+        </div>
+      </section>
+    </section>
   )
 }
 

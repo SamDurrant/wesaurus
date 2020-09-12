@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import '../../utilities/animations/slide-and-appear.css'
+import '../../utilities/animations.css'
 import './Nav.css'
 import routes from '../../utilities/routes'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import ColorToggle from '../ColorToggle/ColorToggle'
 
 function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -65,6 +66,7 @@ function Nav() {
         <Link to={routes.settings} onClick={toggleMenu}>
           settings
         </Link>
+        <ColorToggle />
       </nav>
     </div>
   )

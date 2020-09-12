@@ -1,19 +1,16 @@
 import React from 'react'
 import './Register.css'
-import {
-  Section,
-  Label,
-  Input,
-  Button,
-} from '../../utilities/utility-components'
+import BasicInput from '../../components/BasicInput/BasicInput'
+import BasicLabel from '../../components/BasicLabel/BasicLabel'
+import Button from '../../components/Button/Button'
 
 function Register() {
   return (
-    <Section>
+    <section className="section">
       <form className="form-card">
         <div>
-          <Label htmlFor="register-email">email</Label>
-          <Input
+          <BasicLabel htmlFor="register-email">email</BasicLabel>
+          <BasicInput
             id="register-email"
             placeholder="email"
             type="email"
@@ -21,12 +18,17 @@ function Register() {
           />
         </div>
         <div>
-          <Label htmlFor="register-name">name</Label>
-          <Input id="register-name" placeholder="email" type="email" required />
+          <BasicLabel htmlFor="register-name">name</BasicLabel>
+          <BasicInput
+            id="register-name"
+            placeholder="email"
+            type="email"
+            required
+          />
         </div>
         <div>
-          <Label htmlFor="register-password">password</Label>
-          <Input
+          <BasicLabel htmlFor="register-password">password</BasicLabel>
+          <BasicInput
             id="register-password"
             placeholder="password"
             type="password"
@@ -34,8 +36,10 @@ function Register() {
           />
         </div>
         <div>
-          <Label htmlFor="register-password-confirm">confirm password</Label>
-          <Input
+          <BasicLabel htmlFor="register-password-confirm">
+            confirm password
+          </BasicLabel>
+          <BasicInput
             id="register-password-confirm"
             placeholder="password"
             type="password"
@@ -44,7 +48,7 @@ function Register() {
         </div>
         <Button type="submit" text="register" />
       </form>
-    </Section>
+    </section>
   )
 }
 
