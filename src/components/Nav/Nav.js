@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import '../../utilities/animations.css'
 import './Nav.css'
@@ -13,6 +14,14 @@ function Nav() {
     list: 'menu-list',
     icon: faBars,
   })
+
+  const StyledSvg = styled.path`
+    fill: ${({ theme }) => theme.background};
+  `
+
+  const StyledIcon = styled(FontAwesomeIcon)`
+    color: ${({ theme }) => theme.body};
+  `
 
   const toggleMenu = () => {
     if (!menuOpen) {
@@ -38,12 +47,12 @@ function Nav() {
           preserveAspectRatio="none"
           style={{ height: '100%', width: '100%' }}
         >
-          <path
+          <StyledSvg
             d="M-5.60,10.36 C161.42,115.95 356.49,-75.48 500.00,37.00 L500.00,150.00 L0.00,150.00 Z"
             className="wave"
-          ></path>
+          ></StyledSvg>
         </svg>
-        <FontAwesomeIcon
+        <StyledIcon
           icon={menuClasses.icon}
           className="menu-icon"
           onClick={toggleMenu}

@@ -5,7 +5,8 @@
 }
 
 :root {
-  --color-light: #f2f6f9;
+  --color-lightest: #fafdff;
+  --color-light: #f0f3f5;
   --color-dark: #264054;
   --color-darkest: #13202a;
   --color-grey: #dcdcdc;
@@ -33,7 +34,7 @@ body {
   width: 100vw;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: 15px 0;
 }
 

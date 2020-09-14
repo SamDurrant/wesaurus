@@ -1,15 +1,24 @@
 import React from 'react'
+import styled from 'styled-components'
 import './Register.css'
 import BasicInput from '../../components/BasicInput/BasicInput'
 import BasicLabel from '../../components/BasicLabel/BasicLabel'
 import Button from '../../components/Button/Button'
 
 function Register() {
+  const StyledLabel = styled(BasicLabel)`
+    color: ${({ theme }) => theme.text};
+  `
+
+  const StyledButton = styled(Button)`
+    color: ${({ theme }) => theme.text};
+  `
+
   return (
     <section className="section">
       <form className="form-card">
         <div>
-          <BasicLabel htmlFor="register-email">email</BasicLabel>
+          <StyledLabel htmlFor="register-email">email</StyledLabel>
           <BasicInput
             id="register-email"
             placeholder="email"
@@ -18,7 +27,7 @@ function Register() {
           />
         </div>
         <div>
-          <BasicLabel htmlFor="register-name">name</BasicLabel>
+          <StyledLabel htmlFor="register-name">name</StyledLabel>
           <BasicInput
             id="register-name"
             placeholder="email"
@@ -27,7 +36,7 @@ function Register() {
           />
         </div>
         <div>
-          <BasicLabel htmlFor="register-password">password</BasicLabel>
+          <StyledLabel htmlFor="register-password">password</StyledLabel>
           <BasicInput
             id="register-password"
             placeholder="password"
@@ -36,9 +45,9 @@ function Register() {
           />
         </div>
         <div>
-          <BasicLabel htmlFor="register-password-confirm">
+          <StyledLabel htmlFor="register-password-confirm">
             confirm password
-          </BasicLabel>
+          </StyledLabel>
           <BasicInput
             id="register-password-confirm"
             placeholder="password"
@@ -46,7 +55,7 @@ function Register() {
             required
           />
         </div>
-        <Button type="submit" text="register" />
+        <StyledButton type="submit" text="register" />
       </form>
     </section>
   )

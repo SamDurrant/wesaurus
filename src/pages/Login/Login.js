@@ -1,15 +1,24 @@
 import React from 'react'
+import styled from 'styled-components'
 import './Login.css'
 import BasicInput from '../../components/BasicInput/BasicInput'
 import BasicLabel from '../../components/BasicLabel/BasicLabel'
 import Button from '../../components/Button/Button'
 
 function Login() {
+  const StyledLabel = styled(BasicLabel)`
+    color: ${({ theme }) => theme.text};
+  `
+
+  const StyledButton = styled(Button)`
+    color: ${({ theme }) => theme.text};
+  `
+
   return (
     <section className="section">
       <form className="form-card">
         <div>
-          <BasicLabel htmlFor="login-email">email</BasicLabel>
+          <StyledLabel htmlFor="login-email">email</StyledLabel>
           <BasicInput
             id="login-email"
             placeholder="email"
@@ -18,7 +27,7 @@ function Login() {
           />
         </div>
         <div>
-          <BasicLabel htmlFor="login-password">password</BasicLabel>
+          <StyledLabel htmlFor="login-password">password</StyledLabel>
           <BasicInput
             id="login-password"
             placeholder="password"
@@ -26,7 +35,7 @@ function Login() {
             required
           />
         </div>
-        <Button type="submit" text="login" />
+        <StyledButton type="submit" text="login" />
       </form>
     </section>
   )
