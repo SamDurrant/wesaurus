@@ -38,11 +38,15 @@ function Landing() {
           </p>
         </div>
         <div className="introduction-abstract">
-          {/* <div> */}
-          <img src={Solid} alt="abstract solid grass clump" />
-          <img src={Dashes} alt="abstract dashes" />
-          <img src={Waves} alt="abstract waves" />
-          {/* </div> */}
+          <div className="solid">
+            <img src={Solid} alt="abstract solid grass clump" />
+          </div>
+          <div className="dashes">
+            <img src={Dashes} alt="abstract dashes" />
+          </div>
+          <div className="waves">
+            <img src={Waves} alt="abstract waves" />
+          </div>
         </div>
       </section>
     </section>
