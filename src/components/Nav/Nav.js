@@ -6,7 +6,14 @@ import './Nav.css'
 import routes from '../../utilities/routes'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
-import ColorToggle from '../ColorToggle/ColorToggle'
+
+const StyledSvg = styled.path`
+  fill: ${({ theme }) => theme.background};
+`
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: ${({ theme }) => theme.body};
+`
 
 function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -14,14 +21,6 @@ function Nav() {
     list: 'menu-list',
     icon: faBars,
   })
-
-  const StyledSvg = styled.path`
-    fill: ${({ theme }) => theme.background};
-  `
-
-  const StyledIcon = styled(FontAwesomeIcon)`
-    color: ${({ theme }) => theme.body};
-  `
 
   const toggleMenu = () => {
     if (!menuOpen) {
@@ -75,7 +74,6 @@ function Nav() {
         <Link to={routes.settings} onClick={toggleMenu}>
           settings
         </Link>
-        <ColorToggle />
       </nav>
     </div>
   )

@@ -3,6 +3,7 @@ const routes = {
   register: '/register',
   login: '/login',
   dictionary: '/dictionary',
+  word: '/word',
   explore: '/explore',
   settings: '/settings',
 }
