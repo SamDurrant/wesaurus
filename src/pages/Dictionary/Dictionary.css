@@ -1,6 +1,13 @@
 .section-dictionary {
+  display: flex;
+}
+
+.dictionary-main {
   flex-direction: column;
   justify-content: flex-start;
+  height: 100vh;
+  overflow-y: scroll;
+  padding-bottom: 75px;
 }
 
 .announce-box {

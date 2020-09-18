@@ -1,0 +1,24 @@
+.alphabet-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 10px 10px 75px 0;
+}
+
+.alphabet-letter {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.3s ease-in;
+}
+
+.alphabet-letter:hover {
+  opacity: 0.7;
+}
