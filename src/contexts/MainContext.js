@@ -100,6 +100,42 @@ export const MainProvider = ({ children }) => {
       word: 'javascript engine',
       word_id: 22,
     },
+    {
+      word: 'primitive type',
+      word_id: 23,
+    },
+    {
+      word: 'pure function',
+      word_id: 24,
+    },
+    {
+      word: 'memory leaks',
+      word_id: 25,
+    },
+    {
+      word: 'memory heap',
+      word_id: 26,
+    },
+    {
+      word: 'object',
+      word_id: 27,
+    },
+    {
+      word: 'string',
+      word_id: 28,
+    },
+    {
+      word: 'inheritance',
+      word_id: 29,
+    },
+    {
+      word: 'polymorphism',
+      word_id: 30,
+    },
+    {
+      word: 'abstraction',
+      word_id: 31,
+    },
   ])
 
   const addWord = (word) => {

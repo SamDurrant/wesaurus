@@ -32,7 +32,7 @@ const alphabet = [
   'Z',
 ]
 
-const StyledLetter = styled.span`
+const StyledLetter = styled.div`
   color: ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.gold};
 `

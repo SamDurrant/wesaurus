@@ -4,6 +4,7 @@ import WordDisplay from '../../components/WordDisplay/WordDisplay'
 import './Dictionary.css'
 import MainContext from '../../contexts/MainContext'
 import AlphabetFilter from '../../components/AlphabetFilter/AlphabetFilter'
+import SearchFilter from '../../components/SearchFilter/SearchFilter'
 
 const StyledHeading = styled.div`
   color: ${({ theme }) => theme.text};
@@ -13,6 +14,11 @@ const StyledHeading = styled.div`
 function Dictionary() {
   const { words } = useContext(MainContext)
   const [displayWords, setDisplayWords] = useState(words)
+
+  const searchForWords = (query) => {
+    const filtered = words.filter((word) => word.contains(query))
+    setDisplayWords(filtered)
+  }
 
   const filterForWords = (letter) => {
     const filtered = words.filter((word) => {
@@ -24,25 +30,26 @@ function Dictionary() {
 
   return (
     <section className="section-dictionary">
-      <section className="section dictionary-main">
-        <StyledHeading className="announce-box">
-          <h1>Hello Sam!</h1>
-        </StyledHeading>
-        <div className="word-box">
-          {displayWords
-            .sort((a, b) =>
-              a.word.toLowerCase() < b.word.toLowerCase() ? -1 : 1
-            )
-            .map((word) => (
-              <WordDisplay
-                key={word.word_id}
-                word={word.word}
-                id={word.word_id}
-              />
-            ))}
-        </div>
-      </section>
-      <AlphabetFilter filterFor={filterForWords} />
+      <StyledHeading className="announce-box">
+        <h1>Hello Sam!</h1>
+      </StyledHeading>
+      <div className="dictionary-controls">
+        <SearchFilter searchFor={searchForWords} />
+        <AlphabetFilter filterFor={filterForWords} />
+      </div>
+      <div className="word-box">
+        {displayWords
+          .sort((a, b) =>
+            a.word.toLowerCase() < b.word.toLowerCase() ? -1 : 1
+          )
+          .map((word) => (
+            <WordDisplay
+              key={word.word_id}
+              word={word.word}
+              id={word.word_id}
+            />
+          ))}
+      </div>
     </section>
   )
 }
