@@ -11,12 +11,19 @@ const StyledHeading = styled.div`
   background: ${({ theme }) => theme.gold};
 `
 
+const StyledBackground = styled.div`
+  background: ${({ theme }) => theme.body};
+`
+
 function Dictionary() {
   const { words } = useContext(MainContext)
   const [displayWords, setDisplayWords] = useState(words)
 
   const searchForWords = (query) => {
-    const filtered = words.filter((word) => word.contains(query))
+    console.log('QUERY:', query)
+    const filtered = words.filter((word) =>
+      word.word.toLowerCase().includes(query.toLowerCase())
+    )
     setDisplayWords(filtered)
   }
 
@@ -33,10 +40,10 @@ function Dictionary() {
       <StyledHeading className="announce-box">
         <h1>Hello Sam!</h1>
       </StyledHeading>
-      <div className="dictionary-controls">
+      <StyledBackground className="dictionary-controls">
         <SearchFilter searchFor={searchForWords} />
         <AlphabetFilter filterFor={filterForWords} />
-      </div>
+      </StyledBackground>
       <div className="word-box">
         {displayWords
           .sort((a, b) =>

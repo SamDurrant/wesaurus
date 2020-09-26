@@ -1,3 +1,7 @@
+.search-icon-container {
+  z-index: 100;
+}
+
 .search-icon {
   width: 40px;
   height: 40px;
@@ -9,12 +13,10 @@
   cursor: pointer;
   border-radius: 50%;
   transition: all 0.3s ease-in;
-  z-index: 50;
 }
 
 .search-icon:hover {
   opacity: 0.7;
-  z-index: 10;
 }
 
 .search-input {
@@ -22,10 +24,12 @@
   grid-column: 2 / 3;
   display: grid;
   align-items: center;
-  background: var(--color-darkest);
   height: 100%;
   width: 0;
   overflow: hidden;
+  place-self: start;
+  transform: translateX(-12rem);
+  z-index: 10;
 }
 
 .search-input input {
@@ -33,26 +37,27 @@
   max-width: 10rem;
   opacity: 0;
   border: none;
+  z-index: 10;
 }
 
 .slide-right {
-  -webkit-animation: slide-right 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) both;
-  animation: slide-right 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) both;
+  -webkit-animation: slide-right 0.4s cubic-bezier(0.445, 0.05, 0.55, 0.95) both;
+  animation: slide-right 0.4s cubic-bezier(0.445, 0.05, 0.55, 0.95) both;
 }
 
-.slide-right input {
-  -webkit-animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
-  animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+.slide-right-input {
+  -webkit-animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s both;
+  animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s both;
 }
 
 .slide-left {
-  -webkit-animation: slide-left 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.4s
+  -webkit-animation: slide-left 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.5s
     both;
-  animation: slide-left 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.4s both;
+  animation: slide-left 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.5s both;
 }
 
-.slide-left input {
-  -webkit-animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s
-    reverse both;
-  animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s reverse both;
+.slide-left-input {
+  -webkit-animation: appear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse
+    both;
+  animation: appear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both;
 }
