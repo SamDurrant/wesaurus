@@ -4,14 +4,14 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './components/App/App'
 import * as serviceWorker from './serviceWorker'
-import { MainProvider } from './contexts/MainContext'
+import { UserProvider } from './contexts/UserContext'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <MainProvider>
+      <UserProvider>
         <App />
-      </MainProvider>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

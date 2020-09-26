@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import routes from '../../utilities/routes'
 import './App.css'
@@ -9,17 +9,14 @@ import Login from '../../pages/Login/Login'
 import Dictionary from '../../pages/Dictionary/Dictionary'
 import Explore from '../../pages/Explore/Explore'
 import Settings from '../../pages/Settings/Settings'
-import MainContext from '../../contexts/MainContext'
 import Word from '../../pages/Word/Word'
+import useUserSettings from '../../hooks/useUserSettings'
 
 function App() {
-  const { mountedComponent } = useContext(MainContext)
+  const { mountedComponent } = useUserSettings()
   // if component hasn't mounted, return empty div
   if (!mountedComponent) return <div />
   return (
-    // <ThemeProvider theme={themeMode}>
-    //   <>
-    //     <GlobalStyleTheme />
     <div className="App">
       <Nav />
       <Switch>
@@ -34,8 +31,6 @@ function App() {
         </>
       </Switch>
     </div>
-    //   </>
-    // </ThemeProvider>
   )
 }
 

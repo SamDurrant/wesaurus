@@ -1,14 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import './Settings.css'
 import Button from '../../components/Button/Button'
-import MainContext from '../../contexts/MainContext'
+import useUserSettings from '../../hooks/useUserSettings'
+
+const StyledButton = styled(Button)`
+  color: ${({ theme }) => theme.text};
+`
 
 function Settings() {
-  const { toggleTheme } = useContext(MainContext)
-  const StyledButton = styled(Button)`
-    color: ${({ theme }) => theme.text};
-  `
+  const { toggleTheme } = useUserSettings()
+
   return (
     <section className="section">
       <StyledButton text="toggle" onClick={toggleTheme} />

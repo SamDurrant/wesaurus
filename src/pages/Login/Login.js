@@ -5,15 +5,15 @@ import BasicInput from '../../components/BasicInput/BasicInput'
 import BasicLabel from '../../components/BasicLabel/BasicLabel'
 import Button from '../../components/Button/Button'
 
+const StyledLabel = styled(BasicLabel)`
+  color: ${({ theme }) => theme.text};
+`
+
+const StyledButton = styled(Button)`
+  color: ${({ theme }) => theme.text};
+`
+
 function Login() {
-  const StyledLabel = styled(BasicLabel)`
-    color: ${({ theme }) => theme.text};
-  `
-
-  const StyledButton = styled(Button)`
-    color: ${({ theme }) => theme.text};
-  `
-
   return (
     <section className="section">
       <form className="form-card">

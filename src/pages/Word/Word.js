@@ -1,9 +1,9 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Word.css'
-import MainContext from '../../contexts/MainContext'
+import useUserDictionary from '../../hooks/useUserDictionary'
 
 function Word(props) {
-  const { getWord } = useContext(MainContext)
+  const { getWord } = useUserDictionary()
   let [word, setWord] = useState('')
 
   useEffect(() => {

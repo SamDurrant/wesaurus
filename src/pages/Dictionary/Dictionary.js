@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import WordDisplay from '../../components/WordDisplay/WordDisplay'
 import './Dictionary.css'
-import MainContext from '../../contexts/MainContext'
 import AlphabetFilter from '../../components/AlphabetFilter/AlphabetFilter'
 import SearchFilter from '../../components/SearchFilter/SearchFilter'
+import useUserDictionary from '../../hooks/useUserDictionary'
 
 const StyledHeading = styled.div`
   color: ${({ theme }) => theme.text};
@@ -16,19 +16,18 @@ const StyledBackground = styled.div`
 `
 
 function Dictionary() {
-  const { words } = useContext(MainContext)
-  const [displayWords, setDisplayWords] = useState(words)
+  const { dictionary } = useUserDictionary()
+  const [displayWords, setDisplayWords] = useState(dictionary)
 
   const searchForWords = (query) => {
-    console.log('QUERY:', query)
-    const filtered = words.filter((word) =>
+    const filtered = dictionary.filter((word) =>
       word.word.toLowerCase().includes(query.toLowerCase())
     )
     setDisplayWords(filtered)
   }
 
   const filterForWords = (letter) => {
-    const filtered = words.filter((word) => {
+    const filtered = dictionary.filter((word) => {
       if (letter === 'All') return word
       return word.word.toUpperCase().startsWith(letter)
     })
