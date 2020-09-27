@@ -5,12 +5,15 @@ import './index.css'
 import App from './components/App/App'
 import * as serviceWorker from './serviceWorker'
 import { UserProvider } from './contexts/UserContext'
+import { MainProvider } from './contexts/MainContext'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <App />
+        <MainProvider>
+          <App />
+        </MainProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,

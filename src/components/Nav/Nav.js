@@ -7,14 +7,6 @@ import routes from '../../utilities/routes'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-const StyledSvg = styled.path`
-  fill: ${({ theme }) => theme.background};
-`
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${({ theme }) => theme.body};
-`
-
 function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [menuClasses, setMenuClasses] = useState({
@@ -46,12 +38,12 @@ function Nav() {
           preserveAspectRatio="none"
           style={{ height: '100%', width: '100%' }}
         >
-          <StyledSvg
+          <path
             d="M-5.60,10.36 C161.42,115.95 356.49,-75.48 500.00,37.00 L500.00,150.00 L0.00,150.00 Z"
             className="wave"
-          ></StyledSvg>
+          ></path>
         </svg>
-        <StyledIcon
+        <FontAwesomeIcon
           icon={menuClasses.icon}
           className="menu-icon"
           onClick={toggleMenu}

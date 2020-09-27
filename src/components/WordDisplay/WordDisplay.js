@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import routes from '../../utilities/routes'
 
 const StyledWord = styled.div`
-  background: ${({ theme }) => theme.opal};
+  background: ${({ theme }) => theme.grey};
   color: ${({ theme }) => theme.text};
 `
 

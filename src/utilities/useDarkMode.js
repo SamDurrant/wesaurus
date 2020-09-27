@@ -13,7 +13,6 @@ export const useDarkMode = () => {
 
   const themeToggler = () => {
     // switches the theme to the opposite
-    console.log(theme)
     theme === 'light' ? setMode('dark') : setMode('light')
   }
 

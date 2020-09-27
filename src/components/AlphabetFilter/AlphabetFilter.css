@@ -20,6 +20,8 @@
   border-radius: 50%;
   transition: all 0.3s ease-in;
   cursor: pointer;
+  background: var(--color-gold);
+  color: var(--color-dark);
 }
 
 .alphabet-letter:hover {

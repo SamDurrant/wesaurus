@@ -6,11 +6,6 @@ import AlphabetFilter from '../../components/AlphabetFilter/AlphabetFilter'
 import SearchFilter from '../../components/SearchFilter/SearchFilter'
 import useUserDictionary from '../../hooks/useUserDictionary'
 
-const StyledHeading = styled.div`
-  color: ${({ theme }) => theme.text};
-  background: ${({ theme }) => theme.gold};
-`
-
 const StyledBackground = styled.div`
   background: ${({ theme }) => theme.body};
 `
@@ -36,9 +31,9 @@ function Dictionary() {
 
   return (
     <section className="section-dictionary">
-      <StyledHeading className="announce-box">
+      <div className="announce-box">
         <h1>Hello Sam!</h1>
-      </StyledHeading>
+      </div>
       <StyledBackground className="dictionary-controls">
         <SearchFilter searchFor={searchForWords} />
         <AlphabetFilter filterFor={filterForWords} />

@@ -5,18 +5,20 @@
 }
 
 :root {
+  --color-light: #f4f1de;
   --color-lightest: #fafdff;
-  --color-light: #f0f3f5;
-  --color-dark: #264054;
-  --color-darkest: #13202a;
-  --color-grey: #dcdcdc;
-  --color-opal: #99bdb8;
+  --color-dark: #313349;
+  --color-darkest: #0a1218;
+  --color-grey-light: #d0dcd9;
+  --color-grey: #7ea097;
   --color-gold: #f6bd60;
+  --color-gold-med: #e7940d;
+  --color-accent: #e07a5f;
 }
 
 a {
   text-decoration: none;
-  color: var(--color-darkest);
+  color: var(--color-dark);
 }
 
 body {

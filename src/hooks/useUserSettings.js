@@ -14,7 +14,6 @@ const useUserSettings = () => {
   }
 
   const toggleTheme = () => {
-    console.log('HELLO:', state.settings.theme)
     // switches the theme to the opposite
     state.settings.theme === 'light' ? setMode('dark') : setMode('light')
   }

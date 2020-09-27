@@ -5,11 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import BasicInput from '../BasicInput/BasicInput'
 
-const StyledIcon = styled.div`
-  color: ${({ theme }) => theme.text};
-  background: ${({ theme }) => theme.gold};
-`
-
 const StyledBackground = styled.div`
   background: ${({ theme }) => theme.body};
 `
@@ -44,9 +39,9 @@ function SearchFilter({ searchFor }) {
   return (
     <>
       <StyledBackground className="search-icon-container">
-        <StyledIcon className="search-icon" onClick={showSearch}>
+        <div className="search-icon" onClick={showSearch}>
           <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-        </StyledIcon>
+        </div>
       </StyledBackground>
       <StyledBackground className={`search-input ${inputClass}`}>
         <BasicInput
