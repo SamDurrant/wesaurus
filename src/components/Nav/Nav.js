@@ -6,6 +6,8 @@ import './Nav.css'
 import routes from '../../utilities/routes'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import TokenService from '../../services/token-service'
+import IdleService from '../../services/idle-service'
 
 function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -30,6 +32,49 @@ function Nav() {
     }
   }
 
+  const handleLogoutClick = () => {
+    TokenService.clearAuthToken()
+    // clear the callbacks to the refresh api and idle auto logout
+    TokenService.clearCallbackBeforeExpiry()
+    IdleService.unRegisterIdleResets()
+    toggleMenu()
+  }
+
+  const renderAuthLinks = () => {
+    return (
+      <>
+        <Link to={routes.explore} onClick={toggleMenu}>
+          explore
+        </Link>
+        <Link to={routes.dictionary} onClick={toggleMenu}>
+          dictionary
+        </Link>
+        <Link to={routes.settings} onClick={toggleMenu}>
+          settings
+        </Link>
+        <Link onClick={handleLogoutClick} to="/">
+          logout
+        </Link>
+      </>
+    )
+  }
+
+  const renderUnauthLinks = () => {
+    return (
+      <>
+        <Link to={routes.login} onClick={toggleMenu}>
+          login
+        </Link>
+        <Link to={routes.register} onClick={toggleMenu}>
+          register
+        </Link>
+        <Link to={routes.explore} onClick={toggleMenu}>
+          explore
+        </Link>
+      </>
+    )
+  }
+
   return (
     <div className="nav-container">
       <div className="wave-bar">
@@ -51,21 +96,7 @@ function Nav() {
       </div>
 
       <nav className={menuClasses.list}>
-        <Link to={routes.login} onClick={toggleMenu}>
-          login
-        </Link>
-        <Link to={routes.register} onClick={toggleMenu}>
-          register
-        </Link>
-        <Link to={routes.explore} onClick={toggleMenu}>
-          explore
-        </Link>
-        <Link to={routes.dictionary} onClick={toggleMenu}>
-          dictionary
-        </Link>
-        <Link to={routes.settings} onClick={toggleMenu}>
-          settings
-        </Link>
+        {TokenService.hasAuthToken() ? renderAuthLinks() : renderUnauthLinks()}
       </nav>
     </div>
   )

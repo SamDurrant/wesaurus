@@ -48,18 +48,13 @@ body {
 /* form card stylings for reusability */
 .form-card {
   margin: 2rem auto;
-  padding: 3rem;
+  padding: 2rem;
   width: 80vw;
   max-width: 31.25rem;
   border: 0.5px solid var(--color-grey);
   border-radius: 15px;
   box-shadow: 10px 15px 16px 1px rgba(0, 0, 0, 0.054),
     3px 5px 20px 1px rgba(0, 0, 0, 0.074), -2px 7px 20px 2px rgba(0, 0, 0, 0.14);
-}
-
-.form-card div {
-  width: fit-content;
-  margin: 0.5rem auto;
 }
 
 .hidden {

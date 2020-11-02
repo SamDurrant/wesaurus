@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
+const StyledWrapper = styled.div`
+  width: fit-content;
+  margin: 0.5rem auto;
+`
+
 const StyledLabel = styled.label`
   color: ${({ theme }) => theme.text};
   display: block;
@@ -56,7 +61,7 @@ const InputWithLabel = ({
   }, [isFocused])
 
   return (
-    <div>
+    <StyledWrapper>
       {!hideLabel && <StyledLabel htmlFor={id}>{labelText}</StyledLabel>}
       <StyledInput
         ref={inputRef}
@@ -68,7 +73,7 @@ const InputWithLabel = ({
         onChange={onInputChange}
         margin={inputMargin}
       />
-    </div>
+    </StyledWrapper>
   )
 }
 
