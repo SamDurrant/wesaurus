@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import WordDisplay from '../../components/WordDisplay/WordDisplay'
 import './Dictionary.css'
 import AlphabetFilter from '../../components/AlphabetFilter/AlphabetFilter'
 import SearchFilter from '../../components/SearchFilter/SearchFilter'
 import useUserDictionary from '../../hooks/useUserDictionary'
-
-const StyledBackground = styled.div`
-  background: ${({ theme }) => theme.body};
-`
 
 function Dictionary() {
   const { dictionary } = useUserDictionary()
@@ -34,10 +29,10 @@ function Dictionary() {
       <div className="announce-box">
         <h1>Hello Sam!</h1>
       </div>
-      <StyledBackground className="dictionary-controls">
+      <div className="dictionary-controls">
         <SearchFilter searchFor={searchForWords} />
         <AlphabetFilter filterFor={filterForWords} />
-      </StyledBackground>
+      </div>
       <div className="word-box">
         {displayWords
           .sort((a, b) =>

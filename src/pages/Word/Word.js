@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import useUserDictionary from '../../hooks/useUserDictionary'
 import useMainDictionary from '../../hooks/useMainDictionary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 const StyledCard = styled.div`
   background: ${({ theme }) => theme.grey};
@@ -15,6 +15,12 @@ function Word(props) {
   const { getWord } = useUserDictionary()
   const { getDefinitions } = useMainDictionary()
   let [word, setWord] = useState('')
+
+  const getAuthorWord = () => {
+    if (word && word.definitions.length > 0) {
+      return word.definitions.find((def) => def.author_id === 3).text
+    }
+  }
 
   useEffect(() => {
     const { wordid } = props.match.params
@@ -28,27 +34,22 @@ function Word(props) {
       <section className="word-section">
         <StyledCard className="card word-card">
           <h1>{word.word}</h1>
-          <p>
-            {word.definitions &&
-              word.definitions.length > 0 &&
-              word.definitions[0].text}
-          </p>
+          <p>{getAuthorWord()}</p>
+          <button className="appear-icon">
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </button>
         </StyledCard>
       </section>
       <section className="def-section">
         {word.definitions &&
-          word.definitions.map((def, i) => {
-            if (i !== 0) {
-              return (
-                <StyledCard key={i} className="card def-card">
-                  <p>{def.text}</p>
-                  <div className="controls">
-                    <FontAwesomeIcon icon={faHeart} />
-                  </div>
-                </StyledCard>
-              )
-            }
-          })}
+          word.definitions.map((def, i) => (
+            <StyledCard key={i} className="card def-card">
+              <p>{def.text}</p>
+              <div className="controls">
+                <FontAwesomeIcon icon={faHeart} />
+              </div>
+            </StyledCard>
+          ))}
       </section>
     </section>
   )

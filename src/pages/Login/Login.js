@@ -1,41 +1,46 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
 import './Login.css'
-import BasicInput from '../../components/BasicInput/BasicInput'
-import BasicLabel from '../../components/BasicLabel/BasicLabel'
-import Button from '../../components/Button/Button'
-
-const StyledLabel = styled(BasicLabel)`
-  color: ${({ theme }) => theme.text};
-`
-
-const StyledButton = styled(Button)`
-  color: ${({ theme }) => theme.text};
-`
+import TextButton from '../../components/TextButton/TextButton'
+import InputWithLabel from '../../components/InputWithLabel/InputWithLabel'
 
 function Login() {
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+  })
+
+  const handleChange = (e) => {
+    console.log(e.target.name, e.target.value)
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    })
+  }
+
   return (
     <section className="section">
       <form className="form-card">
-        <div>
-          <StyledLabel htmlFor="login-email">email</StyledLabel>
-          <BasicInput
-            id="login-email"
-            placeholder="email"
-            type="email"
-            required
-          />
-        </div>
-        <div>
-          <StyledLabel htmlFor="login-password">password</StyledLabel>
-          <BasicInput
-            id="login-password"
-            placeholder="password"
-            type="password"
-            required
-          />
-        </div>
-        <StyledButton type="submit" text="login" />
+        <InputWithLabel
+          id="login-email"
+          value={state.email}
+          type="email"
+          name="email"
+          onInputChange={handleChange}
+          labelText="email"
+          placeholderText="email"
+          required
+        />
+        <InputWithLabel
+          id="login-password"
+          value={state.password}
+          type="password"
+          name="password"
+          onInputChange={handleChange}
+          labelText="password"
+          placeholderText="password"
+          required
+        />
+        <TextButton text="login" />
       </form>
     </section>
   )

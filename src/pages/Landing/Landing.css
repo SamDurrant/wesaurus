@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  margin-bottom: 15vmin;
+  margin: 3vmin auto 15vmin;
   font-size: 0.8rem;
 }
 .hero-image {

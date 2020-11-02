@@ -7,7 +7,7 @@ export const lightTheme = {
   opal: '#99bdb8',
 }
 export const darkTheme = {
-  body: 'var(--color-darkest)',
+  body: 'var(--color-dark)',
   text: 'var(--color-light)',
   toggleBorder: '#f2f6f9',
   background: 'var(--color-accent)',
