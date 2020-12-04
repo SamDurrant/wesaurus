@@ -4,17 +4,22 @@ import './HeartIcon.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as heartSolid } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as heartOutline } from '@fortawesome/free-regular-svg-icons'
+import { useEffect } from 'react'
 
-export default function HeartIcon({ handleClick }) {
-  const [heart, setHeart] = useState(heartOutline)
+export default function HeartIcon({ handleClick, liked = false }) {
+  const [heart, setHeart] = useState(false)
+
+  useEffect(() => {
+    setHeart(liked)
+  }, [liked])
 
   return (
     <FontAwesomeIcon
       className="heart-icon"
       onMouseEnter={() => setHeart(heartSolid)}
-      onMouseLeave={() => setHeart(heartOutline)}
+      onMouseLeave={() => setHeart(liked)}
       onClick={handleClick}
-      icon={heart}
+      icon={heart ? heartSolid : heartOutline}
     />
   )
 }

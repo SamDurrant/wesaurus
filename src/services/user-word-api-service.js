@@ -13,11 +13,12 @@ const UserWordApiService = {
       body: JSON.stringify({
         word_id: id,
       }),
-    }).then((res) => {
-      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-    })
+    }).then((res) =>
+      !res.ok
+        ? res.json().then((e) => Promise.reject(e))
+        : res.json().then((res) => res)
+    )
   },
-
   getWords() {
     const user_id = TokenService.readJwtToken().user_id
 
@@ -30,23 +31,10 @@ const UserWordApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     )
   },
-  getWord(id) {
-    return fetch(`${config.API_ENDPOINT}/words/${id}`, {
-      headers: {},
-    }).then((res) =>
-      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-    )
-  },
-  getWordDefinitions(id) {
-    return fetch(`${config.API_ENDPOINT}/words/${id}/definitions`, {
-      headers: {},
-    }).then((res) =>
-      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-    )
-  },
-  deleteWord(word) {
-    return fetch(`${config.API_ENDPOINT}/words/${word.id}`, {
-      method: 'DELETE',
+  getWord(word_id) {
+    const user_id = TokenService.readJwtToken().user_id
+
+    return fetch(`${config.API_ENDPOINT}/users/${user_id}/words/${word_id}`, {
       headers: {
         'content-type': 'application/json',
         authorization: `bearer ${TokenService.getAuthToken()}`,
@@ -55,8 +43,38 @@ const UserWordApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     )
   },
+  getWordDefinitions(id) {
+    const user_id = TokenService.readJwtToken().user_id
+
+    return fetch(
+      `${config.API_ENDPOINT}/users/${user_id}/words/${id}/definitions`,
+      {
+        headers: {
+          'content-type': 'application/json',
+          authorization: `bearer ${TokenService.getAuthToken()}`,
+        },
+      }
+    ).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    )
+  },
+  deleteWord(word_id) {
+    const user_id = TokenService.readJwtToken().user_id
+
+    return fetch(`${config.API_ENDPOINT}/users/${user_id}/words/${word_id}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `bearer ${TokenService.getAuthToken()}`,
+      },
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res
+    )
+  },
   updateWord(word) {
-    return fetch(`${config.API_ENDPOINT}/words/${word.id}`, {
+    const user_id = TokenService.readJwtToken().user_id
+
+    return fetch(`${config.API_ENDPOINT}/users/${user_id}/words/${word.id}`, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
@@ -68,6 +86,54 @@ const UserWordApiService = {
     }).then((res) =>
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     )
+  },
+  postDefinition(id) {
+    const user_id = TokenService.readJwtToken().user_id
+
+    return fetch(`${config.API_ENDPOINT}/users/${user_id}/definitions`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `bearer ${TokenService.getAuthToken()}`,
+      },
+      body: JSON.stringify({
+        definition_id: id,
+      }),
+    }).then((res) =>
+      !res.ok
+        ? res.json().then((e) => Promise.reject(e))
+        : res.json().then((res) => res)
+    )
+  },
+  getDefinition(definition_id) {
+    const user_id = TokenService.readJwtToken().user_id
+
+    return fetch(
+      `${config.API_ENDPOINT}/users/${user_id}/definitions/${definition_id}`,
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          authorization: `bearer ${TokenService.getAuthToken()}`,
+        },
+      }
+    ).then((res) => {
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    })
+  },
+  deleteDefinition(definition_id) {
+    const user_id = TokenService.readJwtToken().user_id
+
+    return fetch(
+      `${config.API_ENDPOINT}/users/${user_id}/definitions/${definition_id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
+          authorization: `bearer ${TokenService.getAuthToken()}`,
+        },
+      }
+    ).then((res) => (!res.ok ? res.json().then((e) => Promise.reject(e)) : res))
   },
 }
 

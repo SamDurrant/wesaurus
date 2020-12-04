@@ -17,6 +17,10 @@ const UserProvider = ({ children }) => {
       word: {},
       definitions: [],
     },
+    displayWordHistory: {
+      word: {},
+      definitions: [],
+    },
     error: null,
   })
 

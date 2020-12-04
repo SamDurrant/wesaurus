@@ -20,6 +20,10 @@ const useUserDictionary = () => {
     setState((state) => ({ ...state, displayWord: word }))
   }
 
+  const setDisplayWordHistory = (word) => {
+    setState((state) => ({ ...state, displayWordHistory: word }))
+  }
+
   const setError = (error) => {
     setState((state) => ({ ...state, error }))
   }
@@ -30,9 +34,11 @@ const useUserDictionary = () => {
     setWords,
     setError,
     setDisplayWord,
+    setDisplayWordHistory,
     dictionary: state.dictionary,
     definitions: state.definitions,
     displayWord: state.displayWord,
+    displayWordHistory: state.displayWordHistory,
   }
 }
 
