@@ -9,8 +9,15 @@ const WordApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     )
   },
-  getWord(word) {
-    return fetch(`${config.API_ENDPOINT}/words/${word.id}`, {
+  getWord(id) {
+    return fetch(`${config.API_ENDPOINT}/words/${id}`, {
+      headers: {},
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    )
+  },
+  getWordDefinitions(id) {
+    return fetch(`${config.API_ENDPOINT}/words/${id}/definitions`, {
       headers: {},
     }).then((res) =>
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()

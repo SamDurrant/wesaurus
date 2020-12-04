@@ -68,7 +68,6 @@ function Login(props) {
         history.push(destination)
       })
       .catch((res) => {
-        console.log(res)
         setState({
           ...state,
           error: res.error.message,

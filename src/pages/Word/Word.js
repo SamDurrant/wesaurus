@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import './Word.css'
 import styled from 'styled-components'
 import useUserDictionary from '../../hooks/useUserDictionary'
-import useMainDictionary from '../../hooks/useMainDictionary'
+import WordApiService from '../../services/word-api-service'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+
+// components
+import HeartIcon from '../../components/HeartIcon/HeartIcon'
+import SolidButton from '../../components/SolidButton/SolidButton'
 
 const StyledCard = styled.div`
   background: ${({ theme }) => theme.grey};
@@ -12,45 +16,87 @@ const StyledCard = styled.div`
 `
 
 function Word(props) {
-  const { getWord } = useUserDictionary()
-  const { getDefinitions } = useMainDictionary()
-  let [word, setWord] = useState('')
+  const { setError, setDisplayWord, displayWord } = useUserDictionary()
+  let [pageWord, setPageWord] = useState({
+    word: {},
+    definitions: [],
+  })
+  let [isLoading, setIsLoading] = useState(false)
 
-  const getAuthorWord = () => {
-    if (word && word.definitions.length > 0) {
-      return word.definitions.find((def) => def.author_id === 3).text
+  const sortBy = (type) => {
+    setPageWord((word) => ({
+      ...word,
+      definitions: pageWord.definitions.sort((a, b) =>
+        a[type] > b[type] ? -1 : 1
+      ),
+    }))
+  }
+
+  async function fetchData() {
+    const { wordid } = props.match.params
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      let word = await WordApiService.getWord(parseInt(wordid))
+      let definitions = await WordApiService.getWordDefinitions(
+        parseInt(wordid)
+      )
+      setDisplayWord({ word, definitions })
+    } catch (error) {
+      setError(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   useEffect(() => {
-    const { wordid } = props.match.params
-    let word = getWord(parseInt(wordid))
-    word.definitions = getDefinitions(parseInt(wordid))
-    setWord(word)
-  }, [props])
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    setPageWord(displayWord)
+  }, [displayWord])
 
   return (
     <section className="word-page">
-      <section className="word-section">
-        <StyledCard className="card word-card">
-          <h1>{word.word}</h1>
-          <p>{getAuthorWord()}</p>
-          <button className="appear-icon">
-            <FontAwesomeIcon icon={faPencilAlt} />
-          </button>
-        </StyledCard>
-      </section>
-      <section className="def-section">
-        {word.definitions &&
-          word.definitions.map((def, i) => (
-            <StyledCard key={i} className="card def-card">
-              <p>{def.text}</p>
-              <div className="controls">
-                <FontAwesomeIcon icon={faHeart} />
-              </div>
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <>
+          <section className="word-section">
+            <StyledCard className="card word-card">
+              <h1>{pageWord.word.text}</h1>
+              <button className="appear-icon">
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </button>
+              <HeartIcon />
             </StyledCard>
-          ))}
-      </section>
+            <div className="def-controls">
+              <SolidButton
+                text="most liked"
+                handleClick={() => sortBy('like_count')}
+              />
+              <SolidButton
+                text="most recent"
+                handleClick={() => sortBy('date_created')}
+              />
+            </div>
+          </section>
+          <section className="def-section">
+            {pageWord.definitions &&
+              pageWord.definitions.map((def, i) => (
+                <StyledCard key={i} className="card def-card">
+                  <p>{def.text}</p>
+                  <div className="def-likes">
+                    <span>{def.like_count}</span>
+                    <HeartIcon />
+                  </div>
+                </StyledCard>
+              ))}
+          </section>
+        </>
+      )}
     </section>
   )
 }

@@ -22,4 +22,6 @@
 
 .alphabet-letter:hover {
   opacity: 0.7;
+  background: var(--color-dark);
+  color: var(--color-gold);
 }

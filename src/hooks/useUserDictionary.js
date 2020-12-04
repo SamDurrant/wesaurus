@@ -9,13 +9,30 @@ const useUserDictionary = () => {
   }
 
   const getWord = (id) => {
-    return state.dictionary.find((word) => word.word_id === id)
+    return state.dictionary.find((word) => word.id === id)
+  }
+
+  const setWords = (words) => {
+    setState((state) => ({ ...state, dictionary: words }))
+  }
+
+  const setDisplayWord = (word) => {
+    setState((state) => ({ ...state, displayWord: word }))
+  }
+
+  const setError = (error) => {
+    setState((state) => ({ ...state, error }))
   }
 
   return {
     addWord,
     getWord,
+    setWords,
+    setError,
+    setDisplayWord,
     dictionary: state.dictionary,
+    definitions: state.definitions,
+    displayWord: state.displayWord,
   }
 }
 

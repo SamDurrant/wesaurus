@@ -64,16 +64,15 @@ function App() {
     <div className="App">
       <Nav />
       <Switch>
-        <>
-          <PublicOnlyRoute path={routes.landing} component={Landing} />
-          <PublicOnlyRoute path={routes.register} component={Register} />
-          <PublicOnlyRoute path={routes.login} component={Login} />
-          <PrivateRoute path={routes.dictionary} component={Dictionary} />
-          <Route path={`${routes.word}/:wordid`} component={Word} />
-          <Route exact path={routes.explore} component={Explore} />
-          <PrivateRoute path={routes.settings} component={Settings} />
-          <Route component={NotFoundPage} />
-        </>
+        <PublicOnlyRoute exact path={routes.landing} component={Landing} />
+        <PublicOnlyRoute path={routes.register} component={Register} />
+        <PublicOnlyRoute path={routes.login} component={Login} />
+        <Route exact path={routes.explore} component={Explore} />
+        <Route path={`${routes.word}/:wordid`} component={Word} />
+        <PrivateRoute path={routes.dictionary} component={Dictionary} />
+        <PrivateRoute path={`${routes.userWord}/:wordid`} component={Word} />
+        <PrivateRoute path={routes.settings} component={Settings} />
+        <Route component={NotFoundPage} />
       </Switch>
     </div>
   )

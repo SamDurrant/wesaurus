@@ -31,9 +31,14 @@ const StyledButton = styled.button`
   }
 `
 
-function SolidButton({ text, fontSize = '1rem', margin = '1rem auto' }) {
+function SolidButton({
+  text,
+  fontSize = '1rem',
+  margin = '1rem auto',
+  handleClick,
+}) {
   return (
-    <StyledButton fontSize={fontSize} margin={margin}>
+    <StyledButton fontSize={fontSize} margin={margin} onClick={handleClick}>
       {text}
     </StyledButton>
   )

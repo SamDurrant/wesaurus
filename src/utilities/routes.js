@@ -1,10 +1,11 @@
 const routes = {
-  landing: '/landing',
+  landing: '/',
+  explore: '/explore',
+  word: '/explore/word',
   register: '/register',
   login: '/login',
   dictionary: '/dictionary',
-  word: '/word',
-  explore: '/',
+  userWord: '/dictionary/word',
   settings: '/settings',
 }
 

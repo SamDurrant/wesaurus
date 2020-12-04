@@ -3,10 +3,9 @@ import WordDisplay from '../../components/WordDisplay/WordDisplay'
 import './Dictionary.css'
 import AlphabetFilter from '../../components/AlphabetFilter/AlphabetFilter'
 import SearchFilter from '../../components/SearchFilter/SearchFilter'
-import useUserDictionary from '../../hooks/useUserDictionary'
 
 function Dictionary() {
-  const { dictionary } = useUserDictionary()
+  const dictionary = []
   const [displayWords, setDisplayWords] = useState(dictionary)
 
   const searchForWords = (query) => {
