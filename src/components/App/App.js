@@ -69,7 +69,7 @@ function App() {
         <PublicOnlyRoute path={routes.login} component={Login} />
         <Route exact path={routes.explore} component={Explore} />
         <Route path={`${routes.word}/:wordid`} component={Word} />
-        <PrivateRoute path={routes.dictionary} component={Dictionary} />
+        <PrivateRoute exact path={routes.dictionary} component={Dictionary} />
         <PrivateRoute path={`${routes.userWord}/:wordid`} component={Word} />
         <PrivateRoute path={routes.settings} component={Settings} />
         <Route component={NotFoundPage} />

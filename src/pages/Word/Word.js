@@ -3,12 +3,12 @@ import './Word.css'
 import styled from 'styled-components'
 import useUserDictionary from '../../hooks/useUserDictionary'
 import WordApiService from '../../services/word-api-service'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import TokenService from '../../services/token-service'
 
 // components
 import HeartIcon from '../../components/HeartIcon/HeartIcon'
 import SolidButton from '../../components/SolidButton/SolidButton'
+import UserWordApiService from '../../services/user-word-api-service'
 
 const StyledCard = styled.div`
   background: ${({ theme }) => theme.grey};
@@ -17,10 +17,7 @@ const StyledCard = styled.div`
 
 function Word(props) {
   const { setError, setDisplayWord, displayWord } = useUserDictionary()
-  let [pageWord, setPageWord] = useState({
-    word: {},
-    definitions: [],
-  })
+  let [pageWord, setPageWord] = useState(displayWord)
   let [isLoading, setIsLoading] = useState(false)
 
   const sortBy = (type) => {
@@ -30,6 +27,20 @@ function Word(props) {
         a[type] > b[type] ? -1 : 1
       ),
     }))
+  }
+
+  const handleHeartClick = async () => {
+    if (TokenService.hasAuthToken()) {
+      setError(null)
+      try {
+        let res = await UserWordApiService.postWord(pageWord.word.id)
+        console.log({ res })
+      } catch (error) {
+        setError(error)
+      }
+    } else {
+      console.log('not logged in')
+    }
   }
 
   async function fetchData() {
@@ -67,10 +78,7 @@ function Word(props) {
           <section className="word-section">
             <StyledCard className="card word-card">
               <h1>{pageWord.word.text}</h1>
-              <button className="appear-icon">
-                <FontAwesomeIcon icon={faPencilAlt} />
-              </button>
-              <HeartIcon />
+              <HeartIcon handleClick={handleHeartClick} />
             </StyledCard>
             <div className="def-controls">
               <SolidButton

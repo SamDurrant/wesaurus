@@ -13,7 +13,10 @@ const UserProvider = ({ children }) => {
     mountedComponent: false,
     dictionary: [],
     definitions: [],
-    displayWord: {},
+    displayWord: {
+      word: {},
+      definitions: [],
+    },
     error: null,
   })
 

@@ -6,14 +6,15 @@ import { faHeart as heartSolid } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as heartOutline } from '@fortawesome/free-regular-svg-icons'
 
 export default function HeartIcon({ handleClick }) {
-  const [isHovered, setIsHovered] = useState(false)
+  const [heart, setHeart] = useState(heartOutline)
+
   return (
     <FontAwesomeIcon
       className="heart-icon"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => setHeart(heartSolid)}
+      onMouseLeave={() => setHeart(heartOutline)}
       onClick={handleClick}
-      icon={isHovered ? heartSolid : heartOutline}
+      icon={heart}
     />
   )
 }

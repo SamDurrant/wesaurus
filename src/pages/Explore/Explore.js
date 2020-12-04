@@ -69,7 +69,6 @@ function Explore() {
               <WordDisplay
                 key={word.id}
                 word={word.text}
-                id={word.id}
                 path={`${routes.word}/${word.id}`}
               />
             ))
