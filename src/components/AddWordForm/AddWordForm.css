@@ -1,0 +1,12 @@
+.add-form h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.add-form button {
+  margin: 1rem auto;
+}
+
+.add-form input {
+  margin: 0.5rem;
+}

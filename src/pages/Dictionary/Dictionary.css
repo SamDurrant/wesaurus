@@ -3,7 +3,6 @@
   justify-content: flex-start;
   align-items: center;
   padding-bottom: 75px;
-  padding-top: 5%;
 }
 
 .announce-box {
@@ -22,6 +21,13 @@
   padding: 0.5rem 1rem;
   position: sticky;
   top: 0;
+}
+
+.controls-flex {
+  display: flex;
+  justify-content: space-between;
+  max-width: 62.5rem;
+  margin: 0 auto;
 }
 
 .word-box {

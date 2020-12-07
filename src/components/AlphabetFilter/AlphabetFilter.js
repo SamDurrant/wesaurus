@@ -38,7 +38,7 @@ function AlphabetFilter(props) {
         <div
           key={i}
           onClick={() => props.filterFor(letter)}
-          className="alphabet-letter"
+          className="icon-round icon-light alphabet-letter"
         >
           {letter}
         </div>

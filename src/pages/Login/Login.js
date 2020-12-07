@@ -8,8 +8,10 @@ import {
   validatePassword,
   validateUsername,
 } from '../../utilities/UserValidator'
+import useUserDictionary from '../../hooks/useUserDictionary'
 
 function Login(props) {
+  const { setGreeting } = useUserDictionary()
   const [state, setState] = useState({
     user_name: '',
     password: '',
@@ -56,6 +58,7 @@ function Login(props) {
       password: state.password,
     })
       .then(() => {
+        setGreeting(state.user_name)
         setState({
           user_name: '',
           password: '',

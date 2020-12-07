@@ -17,7 +17,7 @@ const StyledCard = styled.div`
   color: ${({ theme }) => theme.text};
 `
 
-function Word(props) {
+function Word({ dictionary }) {
   const {
     setError,
     displayWord,
@@ -100,7 +100,10 @@ function Word(props) {
       if (
         error.error.message === 'This word does not exist in your dictionary'
       ) {
-        setError(null)
+        setDisplayWordHistory({
+          word: {},
+          definitions: [],
+        })
       }
     } finally {
       setIsLoading(false)
@@ -130,7 +133,7 @@ function Word(props) {
               <h1>{pageWord.word.text}</h1>
               <HeartIcon
                 handleClick={() => handleWordLike(pageWord.word.id)}
-                liked={!!wordHistory.word.id}
+                liked={wordHistory.word.id === pageWord.word.id}
               />
             </StyledCard>
             <div className="def-controls">
@@ -145,7 +148,7 @@ function Word(props) {
             </div>
           </section>
           <section className="def-section">
-            {!props.dictionary ? (
+            {!dictionary ? (
               <DefinitionList word={pageWord} wordHistory={wordHistory} />
             ) : (
               <DefinitionList word={wordHistory} wordHistory={wordHistory} />

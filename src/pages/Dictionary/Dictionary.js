@@ -8,7 +8,7 @@ import UserWordApiService from '../../services/user-word-api-service'
 import useUserDictionary from '../../hooks/useUserDictionary'
 
 function Dictionary() {
-  const { dictionary, setWords, setError } = useUserDictionary()
+  const { greeting, dictionary, setWords, setError } = useUserDictionary()
 
   const [displayWords, setDisplayWords] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -52,7 +52,7 @@ function Dictionary() {
   return (
     <section className="section-dictionary">
       <div className="announce-box">
-        <h1>Hello Sam!</h1>
+        <h1>Hello {greeting}!</h1>
       </div>
       <div className="dictionary-controls">
         <SearchFilter searchFor={searchForWords} />

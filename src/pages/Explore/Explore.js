@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import './Explore.css'
 import routes from '../../utilities/routes'
 import useUserDictionary from '../../hooks/useUserDictionary'
@@ -9,11 +9,19 @@ import WordDisplay from '../../components/WordDisplay/WordDisplay'
 import AlphabetFilter from '../../components/AlphabetFilter/AlphabetFilter'
 import SearchFilter from '../../components/SearchFilter/SearchFilter'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import useModal from '../../hooks/useModal'
+import Modal from '../../components/Modal/Modal'
+import AddWordForm from '../../components/AddWordForm/AddWordForm'
+
 function Explore() {
   const { dictionary, setWords, setError } = useUserDictionary()
 
   const [displayWords, setDisplayWords] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const { isVisible, toggleModal } = useModal()
 
   const searchForWords = (query) => {
     const filtered = dictionary.filter((word) =>
@@ -54,7 +62,12 @@ function Explore() {
   return (
     <section className="section-dictionary">
       <div className="dictionary-controls">
-        <SearchFilter searchFor={searchForWords} />
+        <div className="controls-flex">
+          <SearchFilter searchFor={searchForWords} />
+          <div className="icon-round icon-med" onClick={toggleModal}>
+            <FontAwesomeIcon icon={faPlus} />
+          </div>
+        </div>
         <AlphabetFilter filterFor={filterForWords} />
       </div>
       <div className="word-box">
@@ -74,6 +87,9 @@ function Explore() {
             ))
         )}
       </div>
+      <Modal isVisible={isVisible} hide={toggleModal}>
+        <AddWordForm />
+      </Modal>
     </section>
   )
 }

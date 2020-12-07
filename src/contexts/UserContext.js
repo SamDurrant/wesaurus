@@ -7,6 +7,7 @@ const UserContext = createContext([{}, () => {}])
 
 const UserProvider = ({ children }) => {
   const [state, setState] = useState({
+    userName: null,
     settings: {
       theme: 'light',
     },

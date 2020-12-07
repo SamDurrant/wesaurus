@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import '../../utilities/animations.css'
 import './Nav.css'
 import routes from '../../utilities/routes'
@@ -7,8 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import TokenService from '../../services/token-service'
 import IdleService from '../../services/idle-service'
+import useUserDictionary from '../../hooks/useUserDictionary'
 
 function Nav() {
+  const { clearGreeting } = useUserDictionary()
   const [menuOpen, setMenuOpen] = useState(false)
   const [menuClasses, setMenuClasses] = useState({
     list: 'menu-list',
@@ -36,24 +38,25 @@ function Nav() {
     // clear the callbacks to the refresh api and idle auto logout
     TokenService.clearCallbackBeforeExpiry()
     IdleService.unRegisterIdleResets()
+    clearGreeting()
     toggleMenu()
   }
 
   const renderAuthLinks = () => {
     return (
       <>
-        <Link to={routes.explore} onClick={toggleMenu}>
+        <NavLink to={routes.explore} onClick={toggleMenu}>
           explore
-        </Link>
-        <Link to={routes.dictionary} onClick={toggleMenu}>
+        </NavLink>
+        <NavLink to={routes.dictionary} onClick={toggleMenu}>
           dictionary
-        </Link>
-        <Link to={routes.settings} onClick={toggleMenu}>
+        </NavLink>
+        <NavLink to={routes.settings} onClick={toggleMenu}>
           settings
-        </Link>
-        <Link onClick={handleLogoutClick} to="/">
+        </NavLink>
+        <NavLink exact to="/" onClick={handleLogoutClick}>
           logout
-        </Link>
+        </NavLink>
       </>
     )
   }
@@ -61,15 +64,15 @@ function Nav() {
   const renderUnauthLinks = () => {
     return (
       <>
-        <Link to={routes.login} onClick={toggleMenu}>
+        <NavLink to={routes.login} onClick={toggleMenu}>
           login
-        </Link>
-        <Link to={routes.register} onClick={toggleMenu}>
+        </NavLink>
+        <NavLink to={routes.register} onClick={toggleMenu}>
           register
-        </Link>
-        <Link to={routes.explore} onClick={toggleMenu}>
+        </NavLink>
+        <NavLink to={routes.explore} onClick={toggleMenu}>
           explore
-        </Link>
+        </NavLink>
       </>
     )
   }

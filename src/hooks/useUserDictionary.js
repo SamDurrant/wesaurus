@@ -28,6 +28,14 @@ const useUserDictionary = () => {
     setState((state) => ({ ...state, error }))
   }
 
+  const setGreeting = (name) => {
+    setState((state) => ({ ...state, userName: name }))
+  }
+
+  const clearGreeting = () => {
+    setState((state) => ({ ...state, userName: null }))
+  }
+
   return {
     addWord,
     getWord,
@@ -35,10 +43,13 @@ const useUserDictionary = () => {
     setError,
     setDisplayWord,
     setDisplayWordHistory,
+    setGreeting,
+    clearGreeting,
     dictionary: state.dictionary,
     definitions: state.definitions,
     displayWord: state.displayWord,
     displayWordHistory: state.displayWordHistory,
+    greeting: state.userName,
   }
 }
 

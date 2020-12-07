@@ -6,22 +6,11 @@
 }
 
 .alphabet-letter {
-  width: 40px;
-  height: 40px;
   margin: 0 5px;
   grid-row: 1 / 2;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  border-radius: 50%;
-  transition: all 0.3s ease-in;
-  cursor: pointer;
-  background: var(--color-gold);
-  color: var(--color-dark);
 }
 
 .alphabet-letter:hover {
-  opacity: 0.7;
   background: var(--color-dark);
   color: var(--color-gold);
 }

@@ -25,7 +25,7 @@ function SearchFilter({ searchFor }) {
         hideLabel
         required
       />
-      <div className="search-icon">
+      <div className="icon-round icon-light">
         <FontAwesomeIcon icon={faSearch} />
       </div>
     </div>
