@@ -70,7 +70,9 @@ function App() {
         <Route exact path={routes.explore} component={Explore} />
         <Route path={`${routes.word}/:wordid`} component={Word} />
         <PrivateRoute exact path={routes.dictionary} component={Dictionary} />
-        <PrivateRoute path={`${routes.userWord}/:wordid`} component={Word} />
+        <PrivateRoute path={`${routes.userWord}/:wordid`}>
+          <Word dictionary={true} />
+        </PrivateRoute>
         <PrivateRoute path={routes.settings} component={Settings} />
         <Route component={NotFoundPage} />
       </Switch>

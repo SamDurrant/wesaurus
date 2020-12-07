@@ -1,0 +1,25 @@
+.def-card {
+  flex: 1 1 250px;
+  margin: 1rem;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-rows: 1fr;
+  place-items: center;
+}
+
+.def-card p {
+  padding: 1rem 0;
+}
+
+.def-likes {
+  border-top: 1px solid var(--color-lightest);
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.def-likes span {
+  margin-right: 1rem;
+}
