@@ -18,7 +18,7 @@ const UserProvider = ({ children }) => {
       word: {},
       definitions: [],
     },
-    displayWordHistory: {
+    displayWordSaved: {
       word: {},
       definitions: [],
     },

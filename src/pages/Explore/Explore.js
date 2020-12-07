@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Explore.css'
 import routes from '../../utilities/routes'
 import useUserDictionary from '../../hooks/useUserDictionary'
@@ -14,13 +14,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import useModal from '../../hooks/useModal'
 import Modal from '../../components/Modal/Modal'
 import AddWordForm from '../../components/AddWordForm/AddWordForm'
+import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay'
 
 function Explore() {
-  const { dictionary, setWords, setError } = useUserDictionary()
+  const { dictionary, setWords, error, setError } = useUserDictionary()
 
   const [displayWords, setDisplayWords] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
   const { isVisible, toggleModal } = useModal()
 
   const searchForWords = (query) => {
@@ -50,7 +50,6 @@ function Explore() {
       setIsLoading(false)
     }
   }
-
   useEffect(() => {
     fetchData()
   }, [])
@@ -71,6 +70,7 @@ function Explore() {
         <AlphabetFilter filterFor={filterForWords} />
       </div>
       <div className="word-box">
+        {error && <ErrorDisplay error={error} fontSize="20px" />}
         {isLoading ? (
           <div>Loading</div>
         ) : (

@@ -53,6 +53,10 @@
   justify-content: center;
 }
 
+.def-controls button {
+  margin: 1rem 0.5rem;
+}
+
 .appear-icon {
   position: absolute;
   top: 1rem;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import routes from '../../utilities/routes'
 import WordDisplay from '../../components/WordDisplay/WordDisplay'
 import './Dictionary.css'
@@ -6,9 +6,16 @@ import AlphabetFilter from '../../components/AlphabetFilter/AlphabetFilter'
 import SearchFilter from '../../components/SearchFilter/SearchFilter'
 import UserWordApiService from '../../services/user-word-api-service'
 import useUserDictionary from '../../hooks/useUserDictionary'
+import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay'
 
 function Dictionary() {
-  const { greeting, dictionary, setWords, setError } = useUserDictionary()
+  const {
+    greeting,
+    dictionary,
+    setWords,
+    error,
+    setError,
+  } = useUserDictionary()
 
   const [displayWords, setDisplayWords] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -40,7 +47,6 @@ function Dictionary() {
       setIsLoading(false)
     }
   }
-
   useEffect(() => {
     fetchData()
   }, [])
@@ -51,26 +57,33 @@ function Dictionary() {
 
   return (
     <section className="section-dictionary">
-      <div className="announce-box">
-        <h1>Hello {greeting}!</h1>
-      </div>
-      <div className="dictionary-controls">
-        <SearchFilter searchFor={searchForWords} />
-        <AlphabetFilter filterFor={filterForWords} />
-      </div>
-      <div className="word-box">
-        {displayWords
-          .sort((a, b) =>
-            a.text.toLowerCase() < b.text.toLowerCase() ? -1 : 1
-          )
-          .map((word) => (
-            <WordDisplay
-              key={word.id}
-              word={word.text}
-              path={`${routes.userWord}/${word.id}`}
-            />
-          ))}
-      </div>
+      {error && <ErrorDisplay error={error} fontSize="20px" />}
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <Fragment>
+          <div className="announce-box">
+            <h1>Hello {greeting}!</h1>
+          </div>
+          <div className="dictionary-controls">
+            <SearchFilter searchFor={searchForWords} />
+            <AlphabetFilter filterFor={filterForWords} />
+          </div>
+          <div className="word-box">
+            {displayWords
+              .sort((a, b) =>
+                a.text.toLowerCase() < b.text.toLowerCase() ? -1 : 1
+              )
+              .map((word) => (
+                <WordDisplay
+                  key={word.id}
+                  word={word.text}
+                  path={`${routes.userWord}/${word.id}`}
+                />
+              ))}
+          </div>
+        </Fragment>
+      )}
     </section>
   )
 }

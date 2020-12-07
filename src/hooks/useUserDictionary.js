@@ -8,6 +8,44 @@ const useUserDictionary = () => {
     setState((state) => ({ ...state, dictionary: [...state.dictionary, word] }))
   }
 
+  const addDefinition = (def) => {
+    console.log({ w: def.word_id, d: state.displayWord })
+    if (parseInt(def.word_id) === parseInt(state.displayWord.word.id)) {
+      console.log('samesies', state)
+      setState((state) => ({
+        ...state,
+        definitions: [def, ...state.definitions],
+        displayWord: {
+          ...state.displayWord,
+          definitions: [def, ...state.displayWord.definitions],
+        },
+      }))
+    } else {
+      setState((state) => ({
+        ...state,
+        definitions: [...state.definitions, def],
+      }))
+    }
+  }
+
+  const sortDefinitions = (type) => {
+    setState((state) => ({
+      ...state,
+      displayWord: {
+        ...state.displayWord,
+        definitions: state.displayWord.definitions.sort((a, b) =>
+          a[type] > b[type] ? -1 : 1
+        ),
+      },
+      displayWordSaved: {
+        ...state.displayWordSaved,
+        definitions: state.displayWordSaved.definitions.sort((a, b) =>
+          a[type] > b[type] ? -1 : 1
+        ),
+      },
+    }))
+  }
+
   const getWord = (id) => {
     return state.dictionary.find((word) => word.id === id)
   }
@@ -20,8 +58,8 @@ const useUserDictionary = () => {
     setState((state) => ({ ...state, displayWord: word }))
   }
 
-  const setDisplayWordHistory = (word) => {
-    setState((state) => ({ ...state, displayWordHistory: word }))
+  const setDisplayWordSaved = (word) => {
+    setState((state) => ({ ...state, displayWordSaved: word }))
   }
 
   const setError = (error) => {
@@ -40,16 +78,19 @@ const useUserDictionary = () => {
     addWord,
     getWord,
     setWords,
+    addDefinition,
+    sortDefinitions,
     setError,
     setDisplayWord,
-    setDisplayWordHistory,
+    setDisplayWordSaved,
     setGreeting,
     clearGreeting,
     dictionary: state.dictionary,
     definitions: state.definitions,
     displayWord: state.displayWord,
-    displayWordHistory: state.displayWordHistory,
+    displayWordSaved: state.displayWordSaved,
     greeting: state.userName,
+    error: state.error,
   }
 }
 

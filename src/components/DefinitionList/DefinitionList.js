@@ -14,9 +14,10 @@ const StyledCard = styled.div`
 
 export default function DefinitionList({ word, wordHistory }) {
   const {
+    error,
     setError,
-    displayWordHistory,
-    setDisplayWordHistory,
+    displayWordSaved,
+    setDisplayWordSaved,
   } = useUserDictionary()
 
   async function handleDefLike(def_id) {
@@ -25,21 +26,21 @@ export default function DefinitionList({ word, wordHistory }) {
       try {
         // if user likes definition, remove it
         if (!!findLikedDef(def_id)) {
-          let def = await UserWordApiService.deleteDefinition(def_id)
-          let filtered = displayWordHistory.definitions.filter(
+          await UserWordApiService.deleteDefinition(def_id)
+          let filtered = displayWordSaved.definitions.filter(
             (def) => def.id !== def_id
           )
 
-          setDisplayWordHistory({
-            ...displayWordHistory,
+          setDisplayWordSaved({
+            ...displayWordSaved,
             definitions: filtered,
           })
         } else {
           // if user doesn't likes definition, add it
           let def = await UserWordApiService.postDefinition(def_id)
-          setDisplayWordHistory({
-            ...displayWordHistory,
-            definitions: [...displayWordHistory.definitions, def],
+          setDisplayWordSaved({
+            ...displayWordSaved,
+            definitions: [...displayWordSaved.definitions, def],
           })
         }
       } catch (error) {
@@ -53,7 +54,7 @@ export default function DefinitionList({ word, wordHistory }) {
   const findLikedDef = (id) =>
     wordHistory.definitions.find((def) => def.id === id)
 
-  return (
+  const makeDefinitions = () => (
     <Fragment>
       {word.definitions.map((def) => (
         <StyledCard key={def.id} className="card def-card">
@@ -67,6 +68,20 @@ export default function DefinitionList({ word, wordHistory }) {
           </div>
         </StyledCard>
       ))}
+    </Fragment>
+  )
+
+  const makeEmpty = () => (
+    <StyledCard className="card def-card empty-card">
+      <div>
+        <h3>We don't see any definitions for this word yet!</h3>
+      </div>
+    </StyledCard>
+  )
+
+  return (
+    <Fragment>
+      {word.definitions.length > 0 ? makeDefinitions() : makeEmpty()}
     </Fragment>
   )
 }

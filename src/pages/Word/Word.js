@@ -11,51 +11,46 @@ import TokenService from '../../services/token-service'
 import HeartIcon from '../../components/HeartIcon/HeartIcon'
 import SolidButton from '../../components/SolidButton/SolidButton'
 import DefinitionList from '../../components/DefinitionList/DefinitionList'
+import useModal from '../../hooks/useModal'
+import Modal from '../../components/Modal/Modal'
+import AddDefinitionForm from '../../components/AddDefinitionForm/AddDefinitionForm'
 
 const StyledCard = styled.div`
   background: ${({ theme }) => theme.grey};
   color: ${({ theme }) => theme.text};
 `
 
-function Word({ dictionary }) {
+function Word({ userDictionary }) {
   const {
+    error,
     setError,
     displayWord,
     setDisplayWord,
-    displayWordHistory,
-    setDisplayWordHistory,
+    sortDefinitions,
+    displayWordSaved,
+    setDisplayWordSaved,
   } = useUserDictionary()
+
   const { wordid } = useParams()
-
-  let [pageWord, setPageWord] = useState(displayWord)
-  let [wordHistory, setWordHistory] = useState(displayWordHistory)
+  const { isVisible, toggleModal } = useModal()
   let [isLoading, setIsLoading] = useState(false)
-
-  const sortBy = (type) => {
-    setPageWord((word) => ({
-      ...word,
-      definitions: pageWord.definitions.sort((a, b) =>
-        a[type] > b[type] ? -1 : 1
-      ),
-    }))
-  }
 
   const handleWordLike = async (word_id) => {
     if (TokenService.hasAuthToken()) {
       setError(null)
       try {
         // if user likes word, remove it
-        if (!!wordHistory.word.id) {
+        if (!!displayWordSaved.word.id) {
           let res = await UserWordApiService.deleteWord(word_id)
-          setDisplayWordHistory({
-            ...displayWordHistory,
+          setDisplayWordSaved({
+            ...displayWordSaved,
             word: res,
           })
         } else {
           // if user doesn't like word, add it
           let res = await UserWordApiService.postWord(word_id)
-          setDisplayWordHistory({
-            ...displayWordHistory,
+          setDisplayWordSaved({
+            ...displayWordSaved,
             word: res,
           })
         }
@@ -68,12 +63,10 @@ function Word({ dictionary }) {
   }
 
   async function fetchData() {
-    // let wordid = parseInt(wordid)
     setIsLoading(true)
     setError(null)
 
     try {
-      // get word & defs from api
       let word = await WordApiService.getWord(wordid)
       let definitions = await WordApiService.getWordDefinitions(wordid)
       setDisplayWord({ word, definitions })
@@ -85,22 +78,19 @@ function Word({ dictionary }) {
   }
 
   async function fetchUserData() {
-    // const wordid = parseInt(wordid)
     setIsLoading(true)
 
     try {
       // get user word & def history from api
       let userWordHistory = await UserWordApiService.getWord(wordid)
       let userDefHistory = await UserWordApiService.getWordDefinitions(wordid)
-      setDisplayWordHistory({
+      setDisplayWordSaved({
         word: userWordHistory,
         definitions: userDefHistory,
       })
-    } catch (error) {
-      if (
-        error.error.message === 'This word does not exist in your dictionary'
-      ) {
-        setDisplayWordHistory({
+    } catch (err) {
+      if (err.error.message === 'This word does not exist in your dictionary') {
+        setDisplayWordSaved({
           word: {},
           definitions: [],
         })
@@ -117,11 +107,6 @@ function Word({ dictionary }) {
     }
   }, [])
 
-  useEffect(() => {
-    setPageWord(displayWord)
-    setWordHistory(displayWordHistory)
-  }, [displayWord, displayWordHistory])
-
   return (
     <section className="word-page">
       {isLoading ? (
@@ -130,29 +115,42 @@ function Word({ dictionary }) {
         <>
           <section className="word-section">
             <StyledCard className="card word-card">
-              <h1>{pageWord.word.text}</h1>
+              <h1>{displayWord.word.text}</h1>
               <HeartIcon
-                handleClick={() => handleWordLike(pageWord.word.id)}
-                liked={wordHistory.word.id === pageWord.word.id}
+                handleClick={() => handleWordLike(displayWord.word.id)}
+                liked={displayWordSaved.word.id === displayWord.word.id}
               />
             </StyledCard>
             <div className="def-controls">
               <SolidButton
                 text="most liked"
-                handleClick={() => sortBy('like_count')}
+                handleClick={() => sortDefinitions('like_count')}
               />
               <SolidButton
                 text="most recent"
-                handleClick={() => sortBy('date_created')}
+                handleClick={() => sortDefinitions('date_created')}
               />
             </div>
+            {!userDictionary && (
+              <SolidButton text="add definition" handleClick={toggleModal} />
+            )}
           </section>
           <section className="def-section">
-            {!dictionary ? (
-              <DefinitionList word={pageWord} wordHistory={wordHistory} />
+            {error && <p>{error}</p>}
+            {!userDictionary ? (
+              <DefinitionList
+                word={displayWord}
+                wordHistory={displayWordSaved}
+              />
             ) : (
-              <DefinitionList word={wordHistory} wordHistory={wordHistory} />
+              <DefinitionList
+                word={displayWordSaved}
+                wordHistory={displayWordSaved}
+              />
             )}
+            <Modal isVisible={isVisible} hide={toggleModal}>
+              <AddDefinitionForm wordid={wordid} hideModal={toggleModal} />
+            </Modal>
           </section>
         </>
       )}
