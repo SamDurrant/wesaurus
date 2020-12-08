@@ -15,9 +15,16 @@ import useModal from '../../hooks/useModal'
 import Modal from '../../components/Modal/Modal'
 import AddWordForm from '../../components/AddWordForm/AddWordForm'
 import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay'
+import TokenService from '../../services/token-service'
 
 function Explore() {
-  const { dictionary, setWords, error, setError } = useUserDictionary()
+  const {
+    dictionary,
+    setWords,
+    error,
+    setError,
+    setGreeting,
+  } = useUserDictionary()
 
   const [displayWords, setDisplayWords] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -52,6 +59,10 @@ function Explore() {
   }
   useEffect(() => {
     fetchData()
+    const user = TokenService.readJwtToken()
+    if (user) {
+      setGreeting(user.sub)
+    }
   }, [])
 
   useEffect(() => {
