@@ -46,6 +46,24 @@ const useUserDictionary = () => {
     }))
   }
 
+  const setDefLike = (type, id) => {
+    setState((state) => ({
+      ...state,
+      displayWord: {
+        ...state.displayWord,
+        definitions: state.displayWord.definitions.map((def) =>
+          def.id !== id
+            ? def
+            : {
+                ...def,
+                like_count:
+                  type === 'add' ? def.like_count++ : def.like_count--,
+              }
+        ),
+      },
+    }))
+  }
+
   const getWord = (id) => {
     return state.dictionary.find((word) => word.id === id)
   }
@@ -80,6 +98,7 @@ const useUserDictionary = () => {
     setWords,
     addDefinition,
     sortDefinitions,
+    setDefLike,
     setError,
     setDisplayWord,
     setDisplayWordSaved,

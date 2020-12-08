@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import './Word.css'
 import styled from 'styled-components'
 import useUserDictionary from '../../hooks/useUserDictionary'
 import WordApiService from '../../services/word-api-service'
 import UserWordApiService from '../../services/user-word-api-service'
 import TokenService from '../../services/token-service'
+import routes from '../../utilities/routes'
 
 // components
 import HeartIcon from '../../components/HeartIcon/HeartIcon'
@@ -21,6 +22,7 @@ const StyledCard = styled.div`
 `
 
 function Word({ userDictionary }) {
+  const history = useHistory()
   const {
     error,
     setError,
@@ -35,6 +37,8 @@ function Word({ userDictionary }) {
   const { isVisible, toggleModal } = useModal()
   let [isLoading, setIsLoading] = useState(false)
 
+  const isWordLiked = displayWordSaved.word.id === displayWord.word.id
+
   const handleWordLike = async (word_id) => {
     if (TokenService.hasAuthToken()) {
       setError(null)
@@ -42,10 +46,14 @@ function Word({ userDictionary }) {
         // if user likes word, remove it
         if (!!displayWordSaved.word.id) {
           let res = await UserWordApiService.deleteWord(word_id)
+          await displayWordSaved.definitions.map((d) =>
+            UserWordApiService.deleteDefinition(d.id)
+          )
           setDisplayWordSaved({
-            ...displayWordSaved,
             word: res,
+            definitions: [],
           })
+          history.push(`${routes.dictionary}`)
         } else {
           // if user doesn't like word, add it
           let res = await UserWordApiService.postWord(word_id)
@@ -118,7 +126,7 @@ function Word({ userDictionary }) {
               <h1>{displayWord.word.text}</h1>
               <HeartIcon
                 handleClick={() => handleWordLike(displayWord.word.id)}
-                liked={displayWordSaved.word.id === displayWord.word.id}
+                liked={isWordLiked}
               />
             </StyledCard>
             <div className="def-controls">

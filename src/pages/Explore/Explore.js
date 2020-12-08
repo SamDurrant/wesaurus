@@ -59,8 +59,8 @@ function Explore() {
   }
   useEffect(() => {
     fetchData()
-    const user = TokenService.readJwtToken()
-    if (user) {
+    if (TokenService.hasAuthToken()) {
+      const user = TokenService.readJwtToken()
       setGreeting(user.sub)
     }
   }, [])

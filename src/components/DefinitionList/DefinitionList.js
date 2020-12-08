@@ -16,16 +16,20 @@ export default function DefinitionList({ word, wordHistory }) {
   const {
     error,
     setError,
+    setDefLike,
+    displayWord,
     displayWordSaved,
     setDisplayWordSaved,
   } = useUserDictionary()
+
+  const isWordLiked = displayWordSaved.word.id === displayWord.word.id
 
   async function handleDefLike(def_id) {
     if (TokenService.hasAuthToken()) {
       setError(null)
       try {
-        // if user likes definition, remove it
-        if (!!findLikedDef(def_id)) {
+        // unlike definition
+        if (isDefLiked(def_id)) {
           await UserWordApiService.deleteDefinition(def_id)
           let filtered = displayWordSaved.definitions.filter(
             (def) => def.id !== def_id
@@ -36,12 +40,13 @@ export default function DefinitionList({ word, wordHistory }) {
             definitions: filtered,
           })
         } else {
-          // if user doesn't likes definition, add it
+          // like definition
           let def = await UserWordApiService.postDefinition(def_id)
           setDisplayWordSaved({
-            ...displayWordSaved,
+            word: isWordLiked ? word.word : displayWord.word,
             definitions: [...displayWordSaved.definitions, def],
           })
+          setDefLike('add', def_id)
         }
       } catch (error) {
         setError(error.error.message)
@@ -51,8 +56,8 @@ export default function DefinitionList({ word, wordHistory }) {
     }
   }
 
-  const findLikedDef = (id) =>
-    wordHistory.definitions.find((def) => def.id === id)
+  const isDefLiked = (id) =>
+    Boolean(wordHistory.definitions.find((def) => def.id === id))
 
   const makeDefinitions = () => (
     <Fragment>
@@ -63,7 +68,7 @@ export default function DefinitionList({ word, wordHistory }) {
             <span>{def.like_count}</span>
             <HeartIcon
               handleClick={() => handleDefLike(def.id)}
-              liked={!!findLikedDef(def.id)}
+              liked={isDefLiked(def.id)}
             />
           </div>
         </StyledCard>
