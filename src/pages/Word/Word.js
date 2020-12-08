@@ -14,7 +14,9 @@ import SolidButton from '../../components/SolidButton/SolidButton'
 import DefinitionList from '../../components/DefinitionList/DefinitionList'
 import useModal from '../../hooks/useModal'
 import Modal from '../../components/Modal/Modal'
+import useAlertModal from '../../hooks/useAlertModal'
 import AddDefinitionForm from '../../components/AddDefinitionForm/AddDefinitionForm'
+import AlertModal from '../../components/AlertModal/AlertModal'
 
 const StyledCard = styled.div`
   background: ${({ theme }) => theme.grey};
@@ -35,6 +37,7 @@ function Word({ userDictionary }) {
 
   const { wordid } = useParams()
   const { isVisible, toggleModal } = useModal()
+  const { isAlert, toggleAlert } = useAlertModal()
   let [isLoading, setIsLoading] = useState(false)
 
   const isWordLiked = displayWordSaved.word.id === displayWord.word.id
@@ -66,7 +69,8 @@ function Word({ userDictionary }) {
         setError(error)
       }
     } else {
-      console.log('not logged in')
+      setError('You need to be logged in to add this to your dictionary.')
+      toggleAlert()
     }
   }
 
@@ -139,12 +143,15 @@ function Word({ userDictionary }) {
                 handleClick={() => sortDefinitions('date_created')}
               />
             </div>
-            {!userDictionary && (
-              <SolidButton text="add definition" handleClick={toggleModal} />
+            {!userDictionary && TokenService.hasAuthToken() && (
+              <SolidButton
+                margin="0 auto"
+                text="add definition"
+                handleClick={toggleModal}
+              />
             )}
           </section>
           <section className="def-section">
-            {error && <p>{error}</p>}
             {!userDictionary ? (
               <DefinitionList
                 word={displayWord}
@@ -159,6 +166,9 @@ function Word({ userDictionary }) {
             <Modal isVisible={isVisible} hide={toggleModal}>
               <AddDefinitionForm wordid={wordid} hideModal={toggleModal} />
             </Modal>
+            <AlertModal isAlert={isAlert} hide={toggleAlert}>
+              <p>{error}</p>
+            </AlertModal>
           </section>
         </>
       )}

@@ -64,14 +64,14 @@ function Nav() {
   const renderUnauthLinks = () => {
     return (
       <>
+        <NavLink to={routes.explore} onClick={toggleMenu}>
+          explore
+        </NavLink>
         <NavLink to={routes.login} onClick={toggleMenu}>
           login
         </NavLink>
         <NavLink to={routes.register} onClick={toggleMenu}>
           register
-        </NavLink>
-        <NavLink to={routes.explore} onClick={toggleMenu}>
-          explore
         </NavLink>
       </>
     )

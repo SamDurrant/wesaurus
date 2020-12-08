@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 const StyledWrapper = styled.div`
-  width: 80%;
+  width: 100%;
+  max-width: 20rem;
   margin: 0.5rem auto;
   display: flex;
   flex-direction: column;
@@ -12,14 +13,18 @@ const StyledWrapper = styled.div`
 const StyledLabel = styled.label`
   color: ${({ theme }) => theme.text};
   display: block;
-  width: 80%;
-  margin-left: 1rem;
+  width: 100%;
+  max-width: 20rem;
+  margin: 0 auto 0 auto;
+  padding-left: 1rem;
   letter-spacing: 1px;
   font-size: 0.7rem;
 `
 
 const StyledInput = styled.textarea`
-  width: 80%;
+  width: 100%;
+  max-width: 20rem;
+  min-height: 7rem;
   border: 0.5px solid #99bdb8;
   border-radius: 1.2rem;
   background-color: var(--color-light);

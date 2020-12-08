@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import './AddDefinitionForm.css'
 import DefinitionApiService from '../../services/definition-api-service'
 import useUserDictionary from '../../hooks/useUserDictionary'
 import routes from '../../utilities/routes'
@@ -37,7 +36,6 @@ export default function AddDefinitionForm({ wordid, hideModal }) {
         text: state.text,
         word_id: wordid,
       })
-      console.log({ definition, history, n: `${routes.word}/${wordid}` })
       addDefinition(definition)
       hideModal()
       history.push(`${routes.word}/${wordid}`)

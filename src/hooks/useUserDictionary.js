@@ -9,9 +9,7 @@ const useUserDictionary = () => {
   }
 
   const addDefinition = (def) => {
-    console.log({ w: def.word_id, d: state.displayWord })
     if (parseInt(def.word_id) === parseInt(state.displayWord.word.id)) {
-      console.log('samesies', state)
       setState((state) => ({
         ...state,
         definitions: [def, ...state.definitions],

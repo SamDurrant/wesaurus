@@ -29,7 +29,7 @@
   margin: 0 auto;
   padding: 1rem 2rem 2rem;
   z-index: 100;
-  background: var(--color-light);
+  background: var(--color-grey-light);
   position: relative;
   border-radius: 5px;
 }
@@ -60,4 +60,8 @@
 .modal label,
 .modal button {
   color: var(--color-dark);
+}
+
+.modal textarea {
+  background: var(--color-grey-light);
 }

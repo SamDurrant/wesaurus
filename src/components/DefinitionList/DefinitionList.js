@@ -6,6 +6,8 @@ import useUserDictionary from '../../hooks/useUserDictionary'
 import UserWordApiService from '../../services/user-word-api-service'
 import TokenService from '../../services/token-service'
 import HeartIcon from '../../components/HeartIcon/HeartIcon'
+import useAlertModal from '../../hooks/useAlertModal'
+import AlertModal from '../AlertModal/AlertModal'
 
 const StyledCard = styled.div`
   background: ${({ theme }) => theme.grey};
@@ -21,6 +23,8 @@ export default function DefinitionList({ word, wordHistory }) {
     displayWordSaved,
     setDisplayWordSaved,
   } = useUserDictionary()
+
+  const { isAlert, toggleAlert } = useAlertModal()
 
   const isWordLiked = displayWordSaved.word.id === displayWord.word.id
 
@@ -39,6 +43,7 @@ export default function DefinitionList({ word, wordHistory }) {
             ...displayWordSaved,
             definitions: filtered,
           })
+          setDefLike('subtract', def_id)
         } else {
           // like definition
           let def = await UserWordApiService.postDefinition(def_id)
@@ -50,9 +55,11 @@ export default function DefinitionList({ word, wordHistory }) {
         }
       } catch (error) {
         setError(error.error.message)
+        toggleAlert()
       }
     } else {
-      console.log('not logged in')
+      setError('You need to be logged in to add this to your dictionary.')
+      toggleAlert()
     }
   }
 
@@ -87,6 +94,9 @@ export default function DefinitionList({ word, wordHistory }) {
   return (
     <Fragment>
       {word.definitions.length > 0 ? makeDefinitions() : makeEmpty()}
+      <AlertModal isAlert={isAlert} hide={toggleAlert}>
+        <p>{error}</p>
+      </AlertModal>
     </Fragment>
   )
 }
