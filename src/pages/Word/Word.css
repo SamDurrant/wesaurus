@@ -66,15 +66,15 @@
   border: 1px solid;
   border-radius: 50%;
   color: inherit;
-  padding: 5px;
+  padding: 7px;
   opacity: 0;
   cursor: pointer;
 }
 
-/* .word-card:hover .appear-icon {
-  -webkit-animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
-  animation: appear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
-} */
+.word-card:hover .appear-icon {
+  -webkit-animation: appear 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+  animation: appear 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+}
 
 @media only screen and (min-width: 800px) {
   .word-page {

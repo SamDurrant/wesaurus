@@ -52,6 +52,13 @@ let reducer = (state, action) => {
       return { ...state, userName: action.payload }
     case 'add-word':
       return { ...state, dictionary: [...state.dictionary, action.payload] }
+    case 'delete-word':
+      return {
+        ...state,
+        dictionary: state.dictionary.filter(
+          (word) => word.id !== action.payload
+        ),
+      }
     case 'set-displayWord':
       return { ...state, displayWord: action.payload }
     case 'set-displayWordSaved':

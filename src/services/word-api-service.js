@@ -37,15 +37,15 @@ const WordApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     )
   },
-  deleteWord(word) {
-    return fetch(`${config.API_ENDPOINT}/words/${word.id}`, {
+  deleteWord(id) {
+    return fetch(`${config.API_ENDPOINT}/words/${id}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
         authorization: `bearer ${TokenService.getAuthToken()}`,
       },
     }).then((res) =>
-      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res
     )
   },
   updateWord(word) {

@@ -11,6 +11,8 @@ import useAlertModal from '../../hooks/useAlertModal'
 import { MainContext } from '../../contexts/MainContext'
 
 // components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import HeartIcon from '../../components/HeartIcon/HeartIcon'
 import SolidButton from '../../components/SolidButton/SolidButton'
 import DefinitionList from '../../components/DefinitionList/DefinitionList'
@@ -77,6 +79,19 @@ function Word({ userDictionary }) {
     }
   }
 
+  const handleDeleteWord = async (word_id) => {
+    if (TokenService.hasAuthToken()) {
+      dispatch({ type: 'set-error', payload: null })
+      try {
+        await WordApiService.deleteWord(word_id)
+        dispatch({ type: 'delete-word', payload: word_id })
+        history.push(`${routes.explore}`)
+      } catch (error) {
+        dispatch({ type: 'set-error', payload: error })
+      }
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true)
@@ -129,6 +144,11 @@ function Word({ userDictionary }) {
     }
   }, [dispatch, wordid])
 
+  const showDeleteButton = () =>
+    !userDictionary &&
+    TokenService.hasAuthToken() &&
+    state.displayWord.definitions.length === 0
+
   return (
     <section className="word-page">
       {isLoading ? (
@@ -142,6 +162,15 @@ function Word({ userDictionary }) {
                 handleClick={() => handleWordLike(state.displayWord.word.id)}
                 liked={isWordLiked}
               />
+              {showDeleteButton() && (
+                <button className="appear-icon">
+                  <FontAwesomeIcon
+                    className="heart-icon"
+                    onClick={() => handleDeleteWord(state.displayWord.word.id)}
+                    icon={faTrashAlt}
+                  />
+                </button>
+              )}
             </StyledCard>
             <div className="def-controls">
               <SolidButton
