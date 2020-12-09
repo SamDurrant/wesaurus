@@ -1,87 +1,76 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './Explore.css'
 import routes from '../../utilities/routes'
-import useUserDictionary from '../../hooks/useUserDictionary'
 import WordApiService from '../../services/word-api-service'
+import TokenService from '../../services/token-service'
+import { MainContext } from '../../contexts/MainContext'
+import useModal from '../../hooks/useModal'
 
 // components
 import WordDisplay from '../../components/WordDisplay/WordDisplay'
 import AlphabetFilter from '../../components/AlphabetFilter/AlphabetFilter'
 import SearchFilter from '../../components/SearchFilter/SearchFilter'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import useModal from '../../hooks/useModal'
 import Modal from '../../components/Modal/Modal'
 import AddWordForm from '../../components/AddWordForm/AddWordForm'
 import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay'
-import TokenService from '../../services/token-service'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 function Explore() {
-  const {
-    dictionary,
-    setWords,
-    error,
-    setError,
-    setGreeting,
-  } = useUserDictionary()
-
-  const [displayWords, setDisplayWords] = useState([])
+  let { state, dispatch } = useContext(MainContext)
+  const [displayWords, setDisplayWords] = useState(state.dictionary)
   const [isLoading, setIsLoading] = useState(false)
   const { isVisible, toggleModal } = useModal()
-
   const searchForWords = (query) => {
-    const filtered = dictionary.filter((word) =>
+    const filtered = state.dictionary.filter((word) =>
       word.text.toLowerCase().includes(query.toLowerCase())
     )
     setDisplayWords(filtered)
   }
 
   const filterForWords = (letter) => {
-    const filtered = dictionary.filter((word) => {
+    const filtered = state.dictionary.filter((word) => {
       if (letter === 'All') return word
       return word.text.toUpperCase().startsWith(letter)
     })
     setDisplayWords(filtered)
   }
 
-  async function fetchData() {
-    setIsLoading(true)
-    setError(null)
-    try {
-      let res = await WordApiService.getWords()
-      setWords(res)
-    } catch (error) {
-      setError(error)
-    } finally {
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true)
+      dispatch({ type: 'set-error', payload: null })
+      try {
+        let words = await WordApiService.getWords()
+        dispatch({ type: 'set-dictionary', payload: words })
+      } catch (error) {
+        dispatch({ type: 'set-error', payload: error })
+      }
       setIsLoading(false)
     }
-  }
-  useEffect(() => {
+
     fetchData()
-    if (TokenService.hasAuthToken()) {
-      const user = TokenService.readJwtToken()
-      setGreeting(user.sub)
-    }
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
-    setDisplayWords(dictionary)
-  }, [dictionary])
+    setDisplayWords(state.dictionary)
+  }, [state.dictionary])
 
   return (
     <section className="section-dictionary">
       <div className="dictionary-controls">
         <div className="controls-flex">
           <SearchFilter searchFor={searchForWords} />
-          <div className="icon-round icon-med" onClick={toggleModal}>
-            <FontAwesomeIcon icon={faPlus} />
-          </div>
+          {TokenService.hasAuthToken() && (
+            <div className="icon-round icon-med" onClick={toggleModal}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          )}
         </div>
         <AlphabetFilter filterFor={filterForWords} />
       </div>
       <div className="word-box">
-        {error && <ErrorDisplay error={error} fontSize="20px" />}
+        {state.error && <ErrorDisplay error={state.error} fontSize="20px" />}
         {isLoading ? (
           <div>Loading</div>
         ) : (

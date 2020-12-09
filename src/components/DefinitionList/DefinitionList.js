@@ -1,12 +1,14 @@
-import React, { Fragment } from 'react'
+import React, { useContext, Fragment } from 'react'
 import './DefinitionList.css'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import useUserDictionary from '../../hooks/useUserDictionary'
 import UserWordApiService from '../../services/user-word-api-service'
 import TokenService from '../../services/token-service'
-import HeartIcon from '../../components/HeartIcon/HeartIcon'
 import useAlertModal from '../../hooks/useAlertModal'
+import { MainContext } from '../../contexts/MainContext'
+
+// components
+import HeartIcon from '../../components/HeartIcon/HeartIcon'
 import AlertModal from '../AlertModal/AlertModal'
 
 const StyledCard = styled.div`
@@ -15,50 +17,55 @@ const StyledCard = styled.div`
 `
 
 export default function DefinitionList({ word, wordHistory }) {
-  const {
-    error,
-    setError,
-    setDefLike,
-    displayWord,
-    displayWordSaved,
-    setDisplayWordSaved,
-  } = useUserDictionary()
-
+  let { state, dispatch } = useContext(MainContext)
   const { isAlert, toggleAlert } = useAlertModal()
-
-  const isWordLiked = displayWordSaved.word.id === displayWord.word.id
+  const isWordLiked = word.word.id === wordHistory.word.id
 
   async function handleDefLike(def_id) {
     if (TokenService.hasAuthToken()) {
-      setError(null)
+      dispatch({ type: 'set-error', payload: null })
       try {
         // unlike definition
         if (isDefLiked(def_id)) {
           await UserWordApiService.deleteDefinition(def_id)
-          let filtered = displayWordSaved.definitions.filter(
-            (def) => def.id !== def_id
-          )
-
-          setDisplayWordSaved({
-            ...displayWordSaved,
-            definitions: filtered,
+          dispatch({
+            type: 'set-displayWordSaved',
+            payload: {
+              ...state.displayWordSaved,
+              definitions: state.displayWordSaved.definitions.filter(
+                (def) => def.id !== def_id
+              ),
+            },
           })
-          setDefLike('subtract', def_id)
+          dispatch({
+            type: 'set-def-like',
+            payload: { like: false, id: def_id },
+          })
         } else {
           // like definition
           let def = await UserWordApiService.postDefinition(def_id)
-          setDisplayWordSaved({
-            word: isWordLiked ? word.word : displayWord.word,
-            definitions: [...displayWordSaved.definitions, def],
+          dispatch({
+            type: 'set-displayWordSaved',
+            payload: {
+              word: isWordLiked ? word.word : state.displayWord.word,
+              definitions: [...state.displayWordSaved.definitions, def],
+            },
           })
-          setDefLike('add', def_id)
+          dispatch({
+            type: 'set-def-like',
+            payload: { like: true, id: def_id },
+          })
         }
       } catch (error) {
-        setError(error.error.message)
+        dispatch({ type: 'set-error', payload: error.error.message })
         toggleAlert()
       }
     } else {
-      setError('You need to be logged in to add this to your dictionary.')
+      dispatch({
+        type: 'set-error',
+        payload: 'You need to be logged in to add this to your dictionary.',
+      })
+
       toggleAlert()
     }
   }
@@ -95,7 +102,7 @@ export default function DefinitionList({ word, wordHistory }) {
     <Fragment>
       {word.definitions.length > 0 ? makeDefinitions() : makeEmpty()}
       <AlertModal isAlert={isAlert} hide={toggleAlert}>
-        <p>{error}</p>
+        <p>{state.error}</p>
       </AlertModal>
     </Fragment>
   )

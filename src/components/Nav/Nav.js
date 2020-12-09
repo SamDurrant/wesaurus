@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { NavLink } from 'react-router-dom'
-import '../../utilities/animations.css'
 import './Nav.css'
+import '../../utilities/animations.css'
 import routes from '../../utilities/routes'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import TokenService from '../../services/token-service'
 import IdleService from '../../services/idle-service'
-import useUserDictionary from '../../hooks/useUserDictionary'
+import { MainContext } from '../../contexts/MainContext'
+
+// components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 function Nav() {
-  const { clearGreeting } = useUserDictionary()
+  let { dispatch } = useContext(MainContext)
   const [menuOpen, setMenuOpen] = useState(false)
   const [menuClasses, setMenuClasses] = useState({
     list: 'menu-list',
@@ -38,17 +40,17 @@ function Nav() {
     // clear the callbacks to the refresh api and idle auto logout
     TokenService.clearCallbackBeforeExpiry()
     IdleService.unRegisterIdleResets()
-    clearGreeting()
+    dispatch({ type: 'set-userName', payload: null })
     toggleMenu()
   }
 
   const renderAuthLinks = () => {
     return (
       <>
-        <NavLink to={routes.explore} onClick={toggleMenu}>
+        <NavLink exact to={routes.explore} onClick={toggleMenu}>
           explore
         </NavLink>
-        <NavLink to={routes.dictionary} onClick={toggleMenu}>
+        <NavLink exact to={routes.dictionary} onClick={toggleMenu}>
           dictionary
         </NavLink>
         <NavLink to={routes.settings} onClick={toggleMenu}>
@@ -64,7 +66,7 @@ function Nav() {
   const renderUnauthLinks = () => {
     return (
       <>
-        <NavLink to={routes.explore} onClick={toggleMenu}>
+        <NavLink exact to={routes.explore} onClick={toggleMenu}>
           explore
         </NavLink>
         <NavLink to={routes.login} onClick={toggleMenu}>

@@ -1,19 +1,20 @@
 import { useContext, useEffect, useCallback } from 'react'
-import { UserContext } from '../contexts/UserContext'
+import { MainContext } from '../contexts/MainContext'
 
 const useUserSettings = () => {
-  const [state, setState] = useContext(UserContext)
+  const { state, dispatch } = useContext(MainContext)
+
   const setMode = useCallback(
     (mode) => {
       // sets color mode in local storage
       window.localStorage.setItem('theme', mode)
       // then sets local state
-      setState((state) => ({
-        ...state,
-        settings: { ...state.settings, theme: mode },
-      }))
+      dispatch({
+        type: 'set-theme',
+        payload: { theme: mode },
+      })
     },
-    [setState]
+    [dispatch]
   )
 
   const toggleTheme = () => {
@@ -28,11 +29,8 @@ const useUserSettings = () => {
     localTheme && setMode(localTheme)
 
     // component mounts once, sets variable to true
-    setState((state) => ({
-      ...state,
-      mountedComponent: true,
-    }))
-  }, [setState, setMode])
+    dispatch({ type: 'set-mounted', payload: true })
+  }, [dispatch, setMode])
 
   return {
     toggleTheme,
