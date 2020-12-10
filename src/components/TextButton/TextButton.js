@@ -13,7 +13,7 @@ const StyledButton = styled.button`
   letter-spacing: 1px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s var(--base-ease);
 
   &:hover {
     border: 0.5px solid #99bdb8;

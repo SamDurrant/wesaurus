@@ -14,6 +14,7 @@
   --color-gold: #f6bd60;
   --color-gold-med: #e7940d;
   --color-accent: #e07a5f;
+  --base-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 a {
@@ -89,7 +90,7 @@ body {
   font-weight: 900;
   cursor: pointer;
   border-radius: 50%;
-  transition: all 0.3s ease-in;
+  transition: all 0.3s var(--base-ease);
 }
 
 .icon-light {

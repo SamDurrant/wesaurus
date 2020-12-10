@@ -10,7 +10,7 @@ import {
 } from '../../utilities/UserValidator'
 
 function Login(props) {
-  const [state, setState] = useState({
+  const [formState, setFormState] = useState({
     user_name: '',
     password: '',
     error: null,
@@ -19,71 +19,69 @@ function Login(props) {
   })
 
   const handleChange = (e) => {
-    setState({
-      ...state,
+    setFormState({
+      ...formState,
       [e.target.name]: e.target.value,
     })
   }
 
-  const handleSubmitJwtAuth = (e) => {
+  const handleSubmitJwtAuth = async (e) => {
     e.preventDefault()
-    setState({
-      ...state,
+    setFormState({
+      ...formState,
       error: null,
       usernameError: null,
       passwordError: null,
     })
 
-    const usernameError = validateUsername(state.user_name)
+    const usernameError = validateUsername(formState.user_name)
     if (usernameError) {
-      setState({
-        ...state,
+      setFormState({
+        ...formState,
         usernameError,
       })
       return
     }
-    const passwordError = validatePassword(state.password)
+    const passwordError = validatePassword(formState.password)
     if (passwordError) {
-      setState({
-        ...state,
+      setFormState({
+        ...formState,
         passwordError,
       })
       return
     }
-
-    AuthApiService.postLogin({
-      user_name: state.user_name,
-      password: state.password,
-    })
-      .then(() => {
-        setState({
-          user_name: '',
-          password: '',
-          error: null,
-          usernameError: null,
-          passwordError: null,
-        })
-        const { location, history } = props
-        const destination = (location.state || {}).from || '/'
-        history.push(destination)
+    try {
+      await AuthApiService.postLogin({
+        user_name: formState.user_name,
+        password: formState.password,
       })
-      .catch((res) => {
-        setState({
-          ...state,
-          error: res.error.message,
-          usernameError: null,
-          passwordError: null,
-        })
+      setFormState({
+        user_name: '',
+        password: '',
+        error: null,
+        usernameError: null,
+        passwordError: null,
       })
+      const { location, history } = props
+      const destination = (location.formState || {}).from || '/'
+      history.push(destination)
+    } catch (error) {
+      setFormState({
+        ...formState,
+        error: error.error.message,
+        usernameError: null,
+        passwordError: null,
+      })
+    }
   }
 
   return (
     <section className="section">
       <form className="form-card" onSubmit={handleSubmitJwtAuth}>
-        <ErrorDisplay error={state.usernameError} fontSize="12px" />
+        <ErrorDisplay error={formState.usernameError} fontSize="12px" />
         <InputWithLabel
           id="login-username"
-          value={state.user_name}
+          value={formState.user_name}
           type="text"
           name="user_name"
           onInputChange={handleChange}
@@ -91,10 +89,10 @@ function Login(props) {
           placeholderText="username"
           required
         />
-        <ErrorDisplay error={state.passwordError} fontSize="12px" />
+        <ErrorDisplay error={formState.passwordError} fontSize="12px" />
         <InputWithLabel
           id="login-password"
-          value={state.password}
+          value={formState.password}
           type="password"
           name="password"
           onInputChange={handleChange}
@@ -103,7 +101,7 @@ function Login(props) {
           required
         />
         <TextButton text="login" />
-        <ErrorDisplay error={state.error} />
+        <ErrorDisplay error={formState.error} />
       </form>
     </section>
   )

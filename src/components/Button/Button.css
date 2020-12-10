@@ -9,7 +9,7 @@
   letter-spacing: 1px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s var(--base-ease);
 }
 
 .Button:hover {
@@ -25,14 +25,10 @@
   box-shadow: 0px 0px 4px 4px rgba(246, 189, 96, 0.7);
 }
 
-.Button:focus-visible {
-  outline: 3px solid rgba(246, 189, 96, 0.7);
-}
-
 .Button-solid {
   background: var(--color-dark);
   color: var(--color-light);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s var(--base-ease);
 }
 
 .Button-solid:hover {
@@ -43,7 +39,7 @@
 .Button-small {
   margin: 5px auto;
   font-size: 0.8rem;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.3s var(--base-ease);
 }
 
 .Button-small:hover {
