@@ -50,6 +50,15 @@ body {
   flex-direction: column;
 }
 
+.def-section {
+  max-width: 62.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-self: center;
+  padding: 1rem 1rem 5rem;
+}
+
 /* form card stylings for reusability */
 .form-card {
   margin: 2rem auto;
@@ -90,6 +99,8 @@ body {
   font-weight: 900;
   cursor: pointer;
   border-radius: 50%;
+  border: transparent;
+  background: none;
   transition: all 0.3s var(--base-ease);
 }
 
@@ -98,11 +109,19 @@ body {
   color: var(--color-dark);
 }
 
+.icon-med {
+  background: var(--color-accent);
+  color: var(--color-dark);
+}
+
 .icon-round:hover {
   opacity: 0.7;
 }
 
-.icon-med {
-  background: var(--color-accent);
-  color: var(--color-dark);
+.icon-round:focus {
+  border-radius: 50%;
+  outline: none;
+  -webkit-box-shadow: 0px 0px 4px 4px rgba(246, 189, 96, 0.7);
+  -moz-box-shadow: 0px 0px 4px 4px rgba(246, 189, 96, 0.7);
+  box-shadow: 0px 0px 4px 4px rgba(246, 189, 96, 0.7);
 }

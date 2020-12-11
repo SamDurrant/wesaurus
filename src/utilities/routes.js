@@ -7,6 +7,7 @@ const routes = {
   dictionary: '/dictionary',
   userWord: '/dictionary/word',
   settings: '/settings',
+  contributions: '/contributions',
 }
 
 export default routes

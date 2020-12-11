@@ -111,7 +111,6 @@ function Word({ userDictionary }) {
     async function fetchUserData() {
       setIsLoading(true)
       try {
-        // get user word & def history from api
         let userWordHistory = await UserWordApiService.getWord(wordid)
         let userDefHistory = await UserWordApiService.getWordDefinitions(wordid)
         dispatch({

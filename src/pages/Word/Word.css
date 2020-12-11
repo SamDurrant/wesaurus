@@ -11,15 +11,6 @@
   padding: 1rem;
 }
 
-.def-section {
-  max-width: 62.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  justify-self: center;
-  padding: 1rem 1rem 5rem;
-}
-
 .word-card {
   max-width: 40rem;
   position: relative;

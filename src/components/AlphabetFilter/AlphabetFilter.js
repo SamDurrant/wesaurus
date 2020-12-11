@@ -35,13 +35,13 @@ function AlphabetFilter(props) {
   return (
     <div className="alphabet-filter">
       {alphabet.map((letter, i) => (
-        <div
+        <button
           key={i}
           onClick={() => props.filterFor(letter)}
           className="icon-round icon-light alphabet-letter"
         >
           {letter}
-        </div>
+        </button>
       ))}
     </div>
   )

@@ -8,9 +8,7 @@ const useUserSettings = () => {
 
   const setMode = useCallback(
     (mode) => {
-      // sets color mode in local storage
       window.localStorage.setItem('theme', mode)
-      // then sets local state
       dispatch({
         type: 'set-theme',
         payload: mode,
@@ -20,7 +18,6 @@ const useUserSettings = () => {
   )
 
   const toggleTheme = () => {
-    // switches the theme to the opposite
     state.settings.theme === 'light' ? setMode('dark') : setMode('light')
   }
 
@@ -34,15 +31,11 @@ const useUserSettings = () => {
           setMode('light')
         }
       } else {
-        // retrieves color mode from local storage
         const localTheme = window.localStorage.getItem('theme')
-        // sets the theme to the color mode, if found in local storage
         localTheme && setMode(localTheme)
       }
     }
     getUserSettings()
-
-    // component mounts once, sets variable to true
     dispatch({ type: 'set-mounted', payload: true })
   }, [dispatch, setMode, state.userName])
 

@@ -27,16 +27,11 @@ const TokenService = {
     return TokenService.parseJwt(TokenService.getAuthToken())
   },
   _getMsUntilExpiry(payload) {
-    // payload is from JWT
-    // exp value is in seconds, need to convert to ms, so '* 1000' calculates the difference between now and when JWT will expire
     return payload.exp * 1000 - Date.now()
   },
   queueCallbackBeforeExpiry(callback) {
-    // get num of ms from now until token expires
     const msUntilExpiry = TokenService._getMsUntilExpiry(
       TokenService.readJwtToken()
-      // queue callback that will happen 10s before token expires
-      // callback is passed in as argument so it could be anything
     )
     _timeoutId = setTimeout(callback, msUntilExpiry - _TEN_SECONDS_IN_MS)
   },

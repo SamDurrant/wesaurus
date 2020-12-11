@@ -13,6 +13,7 @@ let initialState = {
   mountedComponent: false,
   dictionary: [],
   userDictionary: [],
+  userDefinitions: [],
   displayWord: {
     word: {},
     definitions: [],
@@ -28,8 +29,6 @@ let reducer = (state, action) => {
   switch (action.type) {
     case 'set-dictionary':
       return { ...state, dictionary: action.payload }
-    case 'set-userDictionary':
-      return { ...state, userDictionary: action.payload }
     case 'sort-dictionary':
       return {
         ...state,
@@ -45,6 +44,51 @@ let reducer = (state, action) => {
             a[action.payload] > b[action.payload] ? -1 : 1
           ),
         },
+      }
+    case 'set-userDictionary':
+      return { ...state, userDictionary: action.payload }
+    case 'set-userDefinitions':
+      return {
+        ...state,
+        userDefinitions: action.payload.map((def) => ({
+          ...def,
+          editable: false,
+          display: def.text,
+        })),
+      }
+    case 'delete-userDefinition':
+      return {
+        ...state,
+        userDefinitions: state.userDefinitions.filter(
+          (def) => def.id !== action.payload
+        ),
+      }
+    case 'set-definitionEditable':
+      return {
+        ...state,
+        userDefinitions: state.userDefinitions.map((def) =>
+          def.id !== action.payload.id
+            ? def
+            : { ...def, editable: action.payload.editable }
+        ),
+      }
+    case 'set-definitionDisplay':
+      return {
+        ...state,
+        userDefinitions: state.userDefinitions.map((def) =>
+          def.id !== action.payload.id
+            ? def
+            : { ...def, display: action.payload.display }
+        ),
+      }
+    case 'set-definitionText':
+      return {
+        ...state,
+        userDefinitions: state.userDefinitions.map((def) =>
+          def.id !== action.payload.id
+            ? def
+            : { ...def, text: action.payload.text }
+        ),
       }
     case 'set-error':
       return { ...state, error: action.payload }

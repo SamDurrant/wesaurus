@@ -62,9 +62,9 @@ function Explore() {
         <div className="controls-flex">
           <SearchFilter searchFor={searchForWords} />
           {TokenService.hasAuthToken() && (
-            <div className="icon-round icon-med" onClick={toggleModal}>
+            <button className="icon-round icon-med" onClick={toggleModal}>
               <FontAwesomeIcon icon={faPlus} />
-            </div>
+            </button>
           )}
         </div>
         <AlphabetFilter filterFor={filterForWords} />

@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import './Login.css'
+import { MainContext } from '../../contexts/MainContext'
+import TokenService from '../../services/token-service'
 import TextButton from '../../components/TextButton/TextButton'
 import InputWithLabel from '../../components/InputWithLabel/InputWithLabel'
 import AuthApiService from '../../services/auth-api-service'
@@ -9,14 +11,17 @@ import {
   validateUsername,
 } from '../../utilities/UserValidator'
 
+const initialFormState = {
+  user_name: '',
+  password: '',
+  error: null,
+  usernameError: null,
+  passwordError: null,
+}
+
 function Login(props) {
-  const [formState, setFormState] = useState({
-    user_name: '',
-    password: '',
-    error: null,
-    usernameError: null,
-    passwordError: null,
-  })
+  const { state, dispatch } = useContext(MainContext)
+  const [formState, setFormState] = useState(initialFormState)
 
   const handleChange = (e) => {
     setFormState({
@@ -55,16 +60,11 @@ function Login(props) {
         user_name: formState.user_name,
         password: formState.password,
       })
-      setFormState({
-        user_name: '',
-        password: '',
-        error: null,
-        usernameError: null,
-        passwordError: null,
+      setFormState(initialFormState)
+      dispatch({
+        type: 'set-userName',
+        payload: TokenService.readJwtToken().sub,
       })
-      const { location, history } = props
-      const destination = (location.formState || {}).from || '/'
-      history.push(destination)
     } catch (error) {
       setFormState({
         ...formState,
@@ -74,6 +74,14 @@ function Login(props) {
       })
     }
   }
+
+  useEffect(() => {
+    if (state.userName && TokenService.hasAuthToken()) {
+      const { location, history } = props
+      const destination = (location.formState || {}).from || '/'
+      history.push(destination)
+    }
+  }, [state.userName, props])
 
   return (
     <section className="section">

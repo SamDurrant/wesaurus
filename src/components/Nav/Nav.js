@@ -34,10 +34,8 @@ function Nav() {
       setMenuOpen(!menuOpen)
     }
   }
-
   const handleLogoutClick = () => {
     TokenService.clearAuthToken()
-    // clear the callbacks to the refresh api and idle auto logout
     TokenService.clearCallbackBeforeExpiry()
     IdleService.unRegisterIdleResets()
     dispatch({ type: 'set-userName', payload: null })
@@ -52,6 +50,9 @@ function Nav() {
         </NavLink>
         <NavLink exact to={routes.dictionary} onClick={toggleMenu}>
           dictionary
+        </NavLink>
+        <NavLink exact to={routes.contributions} onClick={toggleMenu}>
+          contributions
         </NavLink>
         <NavLink to={routes.settings} onClick={toggleMenu}>
           settings
@@ -98,10 +99,13 @@ function Nav() {
           onClick={toggleMenu}
         />
       </div>
-
-      <nav className={menuClasses.list}>
-        {TokenService.hasAuthToken() ? renderAuthLinks() : renderUnauthLinks()}
-      </nav>
+      <div className="wave-items">
+        <nav className={menuClasses.list}>
+          {TokenService.hasAuthToken()
+            ? renderAuthLinks()
+            : renderUnauthLinks()}
+        </nav>
+      </div>
     </div>
   )
 }

@@ -14,6 +14,7 @@ import Landing from '../../pages/Landing/Landing'
 import Register from '../../pages/Register/Register'
 import Login from '../../pages/Login/Login'
 import Dictionary from '../../pages/Dictionary/Dictionary'
+import Contributions from '../../pages/Contributions/Contributions'
 import Explore from '../../pages/Explore/Explore'
 import Settings from '../../pages/Settings/Settings'
 import Word from '../../pages/Word/Word'
@@ -28,37 +29,26 @@ function App() {
   const { mountedComponent } = useUserSettings()
 
   const logoutFromIdle = () => {
-    // remove token from localStorage
     TokenService.clearAuthToken()
-    // remove queued calls to refresh endpoint
     TokenService.clearCallbackBeforeExpiry()
-    // remove timeouts that auto logout when idle
     IdleService.unRegisterIdleResets()
   }
 
   useEffect(() => {
-    // set callback function for logging out idle user
     IdleService.setIdleCallback(logoutFromIdle)
 
-    // if user is logged in
     if (TokenService.hasAuthToken()) {
-      // tell idle service to register event listeners. If these are not triggered, user is idle and idleCallback will be invoked
       IdleService.registerIdleTimerResets()
-      // tell token service to read JWT, look at exp and queue a timer before the expiry time
       TokenService.queueCallbackBeforeExpiry(() => {
-        // timeout will call this just before token expires
         AuthApiService.postRefreshToken()
       })
     }
     return () => {
-      // when app unmounts, stop event  listeners that clear  token from storage
       IdleService.unRegisterIdleResets()
-      // remove refresh endpoint request
       TokenService.clearCallbackBeforeExpiry()
     }
   }, [])
 
-  // if component hasn't mounted, return empty div
   if (!mountedComponent) return <div />
   return (
     <div className="App">
@@ -70,6 +60,11 @@ function App() {
         <Route exact path={routes.explore} component={Explore} />
         <Route path={`${routes.word}/:wordid`} component={Word} />
         <PrivateRoute exact path={routes.dictionary} component={Dictionary} />
+        <PrivateRoute
+          exact
+          path={routes.contributions}
+          component={Contributions}
+        />
         <PrivateRoute path={`${routes.userWord}/:wordid`}>
           <Word userDictionary />
         </PrivateRoute>

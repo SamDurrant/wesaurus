@@ -1,0 +1,35 @@
+.def-card.def-card-editable {
+  flex: 1 1 100%;
+  padding: 1rem 0;
+}
+
+.def-card-content {
+  width: 90%;
+  max-width: 45rem;
+  height: 100%;
+}
+
+.def-card-content-1 {
+  display: flex;
+  align-content: center;
+  justify-content: flex-end;
+}
+
+.def-card-content-2 {
+  flex: 1 1 auto;
+}
+
+.def-card-editable .def-likes {
+  margin: 0 1rem;
+  width: auto;
+}
+
+.def-card.def-card-editable h3 {
+  font-size: 0.8rem;
+  color: var(--color-dark);
+  margin: 0 1rem;
+}
+
+.def-card.def-card-editable .heart-icon {
+  cursor: default;
+}
